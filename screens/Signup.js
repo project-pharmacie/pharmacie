@@ -27,7 +27,9 @@ import {
 import { CheckBox } from "react-native-elements";
 import { TouchableHighlight } from "react-native-gesture-handler";
 
-const Mon_URL = "http://192.168.25.13:4000";
+const Mon_URL = "http://192.168.1.29:4000";
+
+
 
 export default class Signup extends Component {
   constructor(props) {
@@ -71,10 +73,8 @@ export default class Signup extends Component {
       .then((jsonData) => {
         this.setState({ naData: jsonData });
         console.log("jsonData", jsonData);
-        Alert.alert(
-          "Inscription réussie ! Veuillez se connecter !" 
-            
-        );
+        Alert.alert("Inscription réussie ! Veuillez se connecter !");
+        this.props.navigation.navigate("Login");
       })
       .catch((error) => {
         console.log("error", error);

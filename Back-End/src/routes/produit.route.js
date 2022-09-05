@@ -9,7 +9,7 @@ router.post(
   ProduitController.registerSchema,
   ProduitController.register
 );
-router.get('/:id', ProduitController.getById);
+//router.get('/:id', ProduitController.getById);
 router.get("/", ProduitController.getAll);
 router.get('/:nom', ProduitController.getByNom);
 router.put('/:id', ProduitController.updateSchema,ProduitController.update);

@@ -1,4 +1,5 @@
 import React, { useState, setState,useEffect } from "react";
+import axios from "axios" ;
 import {
   StyleSheet,
   View,
@@ -7,53 +8,53 @@ import {
   TouchableOpacity
 } from "react-native";
 import {
-  Input,
   NativeBaseProvider,
-  Button,
-  Icon,
-  Box,
   Image,
-  AspectRatio
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import Searchbar from "../Shared/SearchBar";
 
-const Mon_URL = "http://192.168.25.13:4000";
+const Mon_URL = "http://192.168.1.29:4000";
 
-const data = [
-  { id: "1", title: "EFFERALGANT " },
-  { id: "2", title: "DOLIPRANE" },
-  { id: "3", title: "VOLTARENE" },
-  { id: "4", title: "DAFALGAN" },
-  { id: "5", title: "LEVOTHYROX" },
-  { id: "6", title: "IMODUIM" },
-  { id: "7", title: "KARDEGIC" },
-  { id: "8", title: "IXPRIM" },
-  { id: "9", title: "FORLAX" },
-  { id: "10", title: "GAVISCON" }
-];
+// const data = [
+//   { id: "1", title: "EFFERALGANT " },
+//   { id: "2", title: "DOLIPRANE" },
+//   { id: "3", title: "VOLTARENE" },
+//   { id: "4", title: "DAFALGAN" },
+//   { id: "5", title: "LEVOTHYROX" },
+//   { id: "6", title: "IMODUIM" },
+//   { id: "7", title: "KARDEGIC" },
+//   { id: "8", title: "IXPRIM" },
+//   { id: "9", title: "FORLAX" },
+//   { id: "10", title: "GAVISCON" }
+// ];
 
 function Produit(props) {
   const navigation = useNavigation();
   const [value, setValue] = useState(null);
 
+  
+  const [produit, setproduit] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('value', value)
-    if (value) {
-      fetch(Mon_URL + "/produit/" + value, {
-        method: "GET"
-      })
-        .then((responseData) => {
-          return responseData.json();
-        })
-        .then((jsonData) => {
-          console.log(jsonData);
-          // setState({ apiData: jsonData });
-          //  console.log(state.apiData);
-        })
-    }
+    axios.get(Mon_URL + "/produit/").then((res) => {
+      let data = res.data;
+      setproduit(data);
+
+    });
+    chercheProduitN()
   }, [value]);
+
+ chercheProduitN = () => {
+  axios.get(Mon_URL + "/produit/" +value).then((res) => {
+//console.log(res.data , "=>>>>>>>>")
+  setproduit(res.data)
+
+ })
+
+}
+ 
   
   
 
@@ -87,14 +88,14 @@ function Produit(props) {
       </View>
       <View style={styles.flatList}>
         <FlatList
-          data={data}
+          data={produit}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.listItem}>
               <TouchableOpacity
                 onPress={() => navigation.navigate("Pharmacie")}
               >
-                <Text style={styles.listItemText}>{item.title}</Text>
+                <Text style={styles.listItemText}>{item.nom}</Text>
               </TouchableOpacity>
             </View>
           )}

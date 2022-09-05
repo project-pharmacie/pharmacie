@@ -34,8 +34,9 @@ function getById(req, res, next) {
 }
 
 function getByNom(req, res, next) {
+  console.log(req.params.name ,"=>>>>>>>")
   produitService.getByNom(req.params.nom)
-      .then(produit => res.json(produit))
+      .then(produit => res.json([produit]))
       .catch(next);
 }
 

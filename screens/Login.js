@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component ,} from "react";
 import {
   AppRegistry,
   ImageBackground,
@@ -21,18 +21,20 @@ import { TouchableHighlight } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const Mon_URL = "http://192.168.25.13:4000";
+const Mon_URL = "http://192.168.1.29:4000";
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      error:"",
       apiData: [],
       naData: []
     };
     this.username = null;
     this.password = null;
   }
+ 
 
   // Boutton Connexion
 
@@ -42,9 +44,8 @@ export default class Login extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-        //'Authorization': 'Bearer Token ' ,
-        //successRedirect : './Acceuil',
       },
+      
       body: JSON.stringify({
         username: this.username,
         password: this.password
@@ -58,10 +59,11 @@ export default class Login extends React.Component {
       })
       .then((jsonData) => {
         console.log(jsonData);
-        Alert.alert("Signin Success!");
+        
         this.props.navigation.navigate("Acceuil");
       })
-      .catch(() => {Alert.alert("veuillez saisir votre identifiant");});
+      .catch(() => {
+        this.setState({error:"veuillez saisir votre identifiant"});});
     this.username = null;
     this.password = null;
   };
@@ -161,7 +163,11 @@ export default class Login extends React.Component {
 
             <View style={styles.buttonStyle}>
               <TouchableHighlight onPress={this.saveButton}>
-                <Button style={styles.buttonDesign}> CONNEXION</Button>
+              <View>
+              <Button style={styles.buttonDesign}> CONNEXION</Button>
+              <Text style={styles.error}>{this.state.error}</Text>
+              </View>
+               
               </TouchableHighlight>
 
               
@@ -188,6 +194,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  error: {
+    color: 'red',
+    alignSelf: 'center',
+},
 
   ImageB: {
     height: "100%",
