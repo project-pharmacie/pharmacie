@@ -14,7 +14,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Searchbar from "../Shared/SearchBar";
 
-const Mon_URL = "http://192.168.1.29:4000";
+const Mon_URL = "http://192.168.1.20:4000";
 
 // const data = [
 //   { id: "1", title: "EFFERALGANT " },
