@@ -22,7 +22,7 @@ async function getById(id) {
 }
 
 async function getByNom(nom) {
-    return await getproduitNom(nom);
+    return await getproduitNom([nom]);
 }
 
 async function create(params) {
@@ -62,7 +62,7 @@ async function getproduit(id) {
     return produit;
 }
 async function getproduitNom(nom) {
-    const produit = await db.produit.find({nom: 'nom'} );
+    const produit = await db.produit.findOne({ where: { nom: nom }} );
     if (!produit) throw 'produit not found';
     return produit;
 }
