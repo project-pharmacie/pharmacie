@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Alert
+  Alert,
 } from "react-native";
 import {
   Input,
@@ -17,26 +17,24 @@ import {
   Image,
   AspectRatio,
   Checkbox,
-  ScrollView
+  ScrollView,
 } from "native-base";
 import {
   FontAwesome5,
   FontAwesome,
-  MaterialCommunityIcons
+  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { CheckBox } from "react-native-elements";
 import { TouchableHighlight } from "react-native-gesture-handler";
 
-const Mon_URL = "http://192.168.1.29:4000";
-
-
+const Mon_URL = "http://192.168.1.20:4000";
 
 export default class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       apiData: [],
-      naData: []
+      naData: [],
     };
     this.id = null;
     this.username = null;
@@ -49,21 +47,20 @@ export default class Signup extends Component {
   // button Enregistrer
 
   saveButton = () => {
-
-      fetch(Mon_URL + "/user/register", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: this.username,
-          email: this.email,
-          password: this.password,
-          adress: this.adress,
-          role: this.role
-        })
-      })
+    fetch(Mon_URL + "/user/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        adress: this.adress,
+        role: this.role,
+      }),
+    })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -114,10 +111,10 @@ export default class Signup extends Component {
                         size="xs"
                         m={2}
                         _light={{
-                          color: "black"
+                          color: "black",
                         }}
                         _dark={{
-                          color: "gray.300"
+                          color: "gray.300",
                         }}
                       />
                     }
@@ -128,10 +125,10 @@ export default class Signup extends Component {
                     }}
                     value={this.username}
                     _light={{
-                      placeholderTextColor: "blueGray.400"
+                      placeholderTextColor: "blueGray.400",
                     }}
                     _dark={{
-                      placeholderTextColor: "blueGray.50"
+                      placeholderTextColor: "blueGray.50",
                     }}
                   />
                 </View>
@@ -148,10 +145,10 @@ export default class Signup extends Component {
                         size="xs"
                         m={2}
                         _light={{
-                          color: "black"
+                          color: "black",
                         }}
                         _dark={{
-                          color: "gray.300"
+                          color: "gray.300",
                         }}
                       />
                     }
@@ -162,10 +159,10 @@ export default class Signup extends Component {
                     }}
                     value={this.email}
                     _light={{
-                      placeholderTextColor: "blueGray.400"
+                      placeholderTextColor: "blueGray.400",
                     }}
                     _dark={{
-                      placeholderTextColor: "blueGray.50"
+                      placeholderTextColor: "blueGray.50",
                     }}
                   />
                 </View>
@@ -182,10 +179,10 @@ export default class Signup extends Component {
                         size="xs"
                         m={2}
                         _light={{
-                          color: "black"
+                          color: "black",
                         }}
                         _dark={{
-                          color: "gray.300"
+                          color: "gray.300",
                         }}
                       />
                     }
@@ -196,10 +193,10 @@ export default class Signup extends Component {
                     }}
                     value={this.adress}
                     _light={{
-                      placeholderTextColor: "blueGray.400"
+                      placeholderTextColor: "blueGray.400",
                     }}
                     _dark={{
-                      placeholderTextColor: "blueGray.50"
+                      placeholderTextColor: "blueGray.50",
                     }}
                   />
                 </View>
@@ -216,10 +213,10 @@ export default class Signup extends Component {
                         size="xs"
                         m={2}
                         _light={{
-                          color: "black"
+                          color: "black",
                         }}
                         _dark={{
-                          color: "gray.300"
+                          color: "gray.300",
                         }}
                       />
                     }
@@ -231,10 +228,10 @@ export default class Signup extends Component {
                     }}
                     value={this.password}
                     _light={{
-                      placeholderTextColor: "blueGray.400"
+                      placeholderTextColor: "blueGray.400",
                     }}
                     _dark={{
-                      placeholderTextColor: "blueGray.50"
+                      placeholderTextColor: "blueGray.50",
                     }}
                   />
                 </View>
@@ -251,10 +248,10 @@ export default class Signup extends Component {
                         size="xs"
                         m={2}
                         _light={{
-                          color: "black"
+                          color: "black",
                         }}
                         _dark={{
-                          color: "gray.300"
+                          color: "gray.300",
                         }}
                       />
                     }
@@ -262,10 +259,10 @@ export default class Signup extends Component {
                     secureTextEntry={true}
                     placeholder="Confirmation Mot de passe"
                     _light={{
-                      placeholderTextColor: "blueGray.400"
+                      placeholderTextColor: "blueGray.400",
                     }}
                     _dark={{
-                      placeholderTextColor: "blueGray.50"
+                      placeholderTextColor: "blueGray.50",
                     }}
                   />
                 </View>
@@ -284,10 +281,10 @@ export default class Signup extends Component {
                         size="xs"
                         m={2}
                         _light={{
-                          color: "black"
+                          color: "black",
                         }}
                         _dark={{
-                          color: "gray.300"
+                          color: "gray.300",
                         }}
                       />
                     }
@@ -299,10 +296,10 @@ export default class Signup extends Component {
                     }}
                     value={this.role}
                     _light={{
-                      placeholderTextColor: "blueGray.400"
+                      placeholderTextColor: "blueGray.400",
                     }}
                     _dark={{
-                      placeholderTextColor: "blueGray.50"
+                      placeholderTextColor: "blueGray.50",
                     }}
                   />
                 </View>
@@ -335,76 +332,76 @@ export default class Signup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
 
   checkT: {
     paddingTop: 16,
-    fontFamily: "monospace"
+    fontFamily: "monospace",
   },
   check: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
 
   check1: {
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
 
   ImageB: {
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
 
   ImageX: {
     height: "10%",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   BiText: {
     fontFamily: "monospace",
     color: "#344372",
     marginTop: 30,
-    fontSize: 40
+    fontSize: 40,
   },
   Bi1Text: {
     fontFamily: "monospace",
     fontSize: 10,
-    marginLeft: 40
+    marginLeft: 40,
   },
 
   Bi2Text: {
     paddingTop: 20,
     fontFamily: "monospace",
     fontSize: 14,
-    marginRight: 180
+    marginRight: 180,
   },
 
   Bi3Text: {
     paddingTop: 10,
     fontFamily: "monospace",
-    fontSize: 10
+    fontSize: 10,
     // marginRight:180,
   },
 
   Middle: {
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   text2: {
     flexDirection: "row",
     justifyContent: "center",
     paddingTop: 5,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
 
   logText: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   emailInput: {
     marginTop: 10,
-    marginRight: 5
+    marginRight: 5,
   },
 
   buttonStyle: {
@@ -413,24 +410,24 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     width: "90%",
     elevation: 8,
-    marginBottom: 15
+    marginBottom: 15,
   },
 
   buttonStyleX: {
     marginRight: 15,
-    marginLeft: 15
+    marginLeft: 15,
   },
 
   buttonDesign: {
-    backgroundColor: "#2DA539"
+    backgroundColor: "#2DA539",
   },
 
   lineStyle: {
     flexDirection: "row",
     marginTop: 30,
     marginLeft: 15,
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 AppRegistry.registerComponent("navigation", () => Signup);
