@@ -17,8 +17,6 @@ import {
   AspectRatio,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import Searchbar from "../Shared/SearchBar";
-
 const Mon_URL = "http://192.168.1.20:4000";
 
 function Acceuil(props) {
@@ -26,18 +24,24 @@ function Acceuil(props) {
   const [value, setValue] = useState();
   const [username, setusername] = useState("user");
 
+  
+
+
+
+
   GetUser = () => {
-    axios.get(Mon_URL + "/user").then((response) => {
-      setusername(response.data[0].username);
+    axios.get(Mon_URL + "/user/current").then((response) => {
+      setusername(response.data);
+      console.log(props.jsonData);
     });
   };
   useEffect(() => {
     GetUser();
   }, []);
 
-  function updateSearch(value) {
-    //do your search logic or anything
-  }
+  // function updateSearch(value) {
+  //   //do your search logic or anything
+  // }
 
   return (
     <View style={styles.container}>
@@ -58,11 +62,11 @@ function Acceuil(props) {
           <Text style={styles.Bi1Text}>Que chercher vous ?</Text>
         </View>
 
-        <Searchbar
+        {/* <Searchbar
           onChangeText={(text) => console.log(text)}
           updateSearch={updateSearch}
           style={{ marginTop: "8%" }}
-        />
+        /> */}
 
         {/*Buttons Pharmacie - produits - Localisation */}
 
@@ -79,7 +83,7 @@ function Acceuil(props) {
           </View>
 
           <View style={styles.button2}>
-            <TouchableHighlight onPress={this.saveButton}>
+            <TouchableHighlight >
               <Button
                 style={styles.buttonDesign}
                 onPress={() => navigation.navigate("Produit")}
@@ -90,7 +94,7 @@ function Acceuil(props) {
           </View>
         </View>
         <View style={styles.button3}>
-          <TouchableHighlight onPress={this.saveButton}>
+          <TouchableHighlight >
             <Button
               style={styles.buttonDesign3}
               onPress={() => navigation.navigate("Localisation")}
