@@ -1,4 +1,4 @@
-import React, { Component ,} from "react";
+import React, { Component } from "react";
 import {
   AppRegistry,
   ImageBackground,
@@ -6,7 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import {
   Input,
@@ -15,26 +15,26 @@ import {
   Icon,
   Box,
   Image,
-  AspectRatio
+  AspectRatio,
 } from "native-base";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import  Acceuil from './Acceuil.js'
 
-const Mon_URL = "http://192.168.1.29:4000";
+const Mon_URL = "http://192.168.1.20:4000";
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error:"",
+      error: "",
       apiData: [],
-      naData: []
+      naData: [],
     };
     this.username = null;
     this.password = null;
   }
- 
 
   // Boutton Connexion
 
@@ -43,27 +43,31 @@ export default class Login extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      
+
       body: JSON.stringify({
         username: this.username,
-        password: this.password
-      })
+        password: this.password,
+      }),
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          
+          return  response.json();
+          
+          
         }
         throw new Error(response.statusText);
       })
       .then((jsonData) => {
-        console.log(jsonData);
-        
+        console.log("=<<<<<<<<<<<<<<<<",jsonData);
+      <Acceuil jsonData={jsonData}/>
         this.props.navigation.navigate("Acceuil");
       })
       .catch(() => {
-        this.setState({error:"veuillez saisir votre identifiant"});});
+        this.setState({ error: "veuillez saisir votre identifiant" });
+      });
     this.username = null;
     this.password = null;
   };
@@ -101,10 +105,10 @@ export default class Login extends React.Component {
                       size="xs"
                       m={2}
                       _light={{
-                        color: "black"
+                        color: "black",
                       }}
                       _dark={{
-                        color: "blueGray.400"
+                        color: "blueGray.400",
                       }}
                     />
                   }
@@ -115,10 +119,10 @@ export default class Login extends React.Component {
                   }}
                   value={this.username}
                   _light={{
-                    placeholderTextColor: "blueGray.400"
+                    placeholderTextColor: "blueGray.400",
                   }}
                   _dark={{
-                    placeholderTextColor: "blueGray.50"
+                    placeholderTextColor: "blueGray.50",
                   }}
                 />
               </View>
@@ -135,10 +139,10 @@ export default class Login extends React.Component {
                       size="xs"
                       m={2}
                       _light={{
-                        color: "black"
+                        color: "black",
                       }}
                       _dark={{
-                        color: "grey.300"
+                        color: "grey.300",
                       }}
                     />
                   }
@@ -150,10 +154,10 @@ export default class Login extends React.Component {
                   }}
                   value={this.password}
                   _light={{
-                    placeholderTextColor: "blueGray.400"
+                    placeholderTextColor: "blueGray.400",
                   }}
                   _dark={{
-                    placeholderTextColor: "blueGray.50"
+                    placeholderTextColor: "blueGray.50",
                   }}
                 />
               </View>
@@ -163,14 +167,11 @@ export default class Login extends React.Component {
 
             <View style={styles.buttonStyle}>
               <TouchableHighlight onPress={this.saveButton}>
-              <View>
-              <Button style={styles.buttonDesign}> CONNEXION</Button>
-              <Text style={styles.error}>{this.state.error}</Text>
-              </View>
-               
+                <View>
+                  <Button style={styles.buttonDesign}> CONNEXION</Button>
+                  <Text style={styles.error}>{this.state.error}</Text>
+                </View>
               </TouchableHighlight>
-
-              
             </View>
 
             {/*Signup*/}
@@ -192,21 +193,21 @@ export default class Login extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   error: {
-    color: 'red',
-    alignSelf: 'center',
-},
+    color: "red",
+    alignSelf: "center",
+  },
 
   ImageB: {
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
 
   ImageX: {
     height: "25%",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   BiText: {
@@ -215,32 +216,32 @@ const styles = StyleSheet.create({
     marginTop: 120,
     fontSize: 23,
     fontWeight: "bold",
-    marginLeft: 90
+    marginLeft: 90,
   },
   Bi1Text: {
     fontFamily: "monospace",
     fontSize: 10,
-    marginLeft: 90
+    marginLeft: 90,
   },
 
   Middle: {
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   text1: {
     flexDirection: "row",
     justifyContent: "center",
-    paddingTop: 30
+    paddingTop: 30,
   },
 
   signupText: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   emailInput: {
     marginTop: 10,
-    marginRight: 5
+    marginRight: 5,
   },
 
   buttonStyle: {
@@ -248,18 +249,18 @@ const styles = StyleSheet.create({
     marginRight: 15,
     paddingLeft: 40,
     width: "90%",
-    elevation: 8
+    elevation: 8,
   },
 
   buttonStyleX: {
     marginTop: 12,
     marginRight: 15,
-    marginLeft: 15
+    marginLeft: 15,
   },
 
   buttonDesign: {
-    backgroundColor: "#2DA539"
-  }
+    backgroundColor: "#2DA539",
+  },
 });
 
 AppRegistry.registerComponent("navigation", () => Login);
