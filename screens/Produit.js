@@ -18,19 +18,6 @@ import Searchbar from "../Shared/SearchBar";
 
 const Mon_URL = "http://192.168.1.20:4000";
 
-// const data = [
-//   { id: "1", title: "EFFERALGANT " },
-//   { id: "2", title: "DOLIPRANE" },
-//   { id: "3", title: "VOLTARENE" },
-//   { id: "4", title: "DAFALGAN" },
-//   { id: "5", title: "LEVOTHYROX" },
-//   { id: "6", title: "IMODUIM" },
-//   { id: "7", title: "KARDEGIC" },
-//   { id: "8", title: "IXPRIM" },
-//   { id: "9", title: "FORLAX" },
-//   { id: "10", title: "GAVISCON" }
-// ];
-
 function Produit(props) {
   const navigation = useNavigation();
   const [value, setValue] = useState(null);
@@ -47,6 +34,7 @@ function Produit(props) {
     });
     chercheProduitN();
   }, [value]);
+
 
   chercheProduitN = () => {
     axios.get(Mon_URL + "/produit/" + value).then((res) => {

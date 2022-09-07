@@ -91,6 +91,7 @@ function Acceuil(props) {
                 <Text style={styles.textbu}> Produits</Text>
               </Button>
             </TouchableHighlight>
+
           </View>
         </View>
         <View style={styles.button3}>
