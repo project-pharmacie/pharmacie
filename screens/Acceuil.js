@@ -15,6 +15,8 @@ import Searchbar from '../Shared/SearchBar'
  function Acceuil (props) {
     const navigation = useNavigation();
     const [value, setValue] = useState()
+
+    
     
     function updateSearch(value) {
         //do your search logic or anything
