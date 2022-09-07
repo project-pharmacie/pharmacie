@@ -20,6 +20,7 @@ import {
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import  Acceuil from './Acceuil.js'
 
 const Mon_URL = "http://192.168.1.20:4000";
 
@@ -52,13 +53,16 @@ export default class Login extends React.Component {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          
+          return  response.json();
+          
+          
         }
         throw new Error(response.statusText);
       })
       .then((jsonData) => {
-        console.log(jsonData);
-
+        console.log("=<<<<<<<<<<<<<<<<",jsonData);
+      <Acceuil jsonData={jsonData}/>
         this.props.navigation.navigate("Acceuil");
       })
       .catch(() => {

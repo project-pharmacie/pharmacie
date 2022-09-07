@@ -14,7 +14,7 @@ import Acceuil from '../screens/Acceuil';
 import Localisation from '../screens/Localisation';
 import DetailProduit from '../screens/DetailProduit';
 import DetailPharmacie from '../screens/DetailPharmacie';
-
+import List from '../Shared/List';
 
 const AboutScreen = (props) => <View><Text></Text></View>
 const AboutScreenAdmin = (props) => <View><Text></Text></View>
