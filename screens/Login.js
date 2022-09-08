@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { useState, React, useEffect } from "react";
 import {
   AppRegistry,
   ImageBackground,
@@ -19,22 +19,18 @@ import {
 } from "native-base";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import  Acceuil from './Acceuil.js'
 
-const Mon_URL = "http://192.168.1.20:4000";
+import "localstorage-polyfill";
 
-export default class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: "",
-      apiData: [],
-      naData: [],
-    };
-    this.username = null;
-    this.password = null;
-  }
+const Login = ({ navigation }) => {
+  const [items, setItems] = useState([]);
+  const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const Mon_URL = "http://192.168.1.54:4000";
+
+
 
   // Boutton Connexion
 
@@ -47,149 +43,143 @@ export default class Login extends React.Component {
       },
 
       body: JSON.stringify({
-        username: this.username,
-        password: this.password,
+        username: username,
+        password: password,
       }),
     })
       .then((response) => {
         if (response.ok) {
-          
-          return  response.json();
-          
+          return response.json();
           
         }
         throw new Error(response.statusText);
       })
       .then((jsonData) => {
-        console.log("=<<<<<<<<<<<<<<<<",jsonData);
-      <Acceuil jsonData={jsonData}/>
-        this.props.navigation.navigate("Acceuil");
+        localStorage.setItem("username", JSON.stringify(jsonData.username));
+
+        navigation.navigate("Acceuil");
       })
       .catch(() => {
-        this.setState({ error: "veuillez saisir votre identifiant" });
+        setError("veuillez saisir votre identifiant");
       });
-    this.username = null;
-    this.password = null;
+    setUsername(null);
+    setPassword(null);
   };
 
-  render() {
-    return (
-      <NativeBaseProvider>
-        <View style={styles.container}>
-          <ImageBackground
-            source={require("../assets/img/B13.png")}
-            style={styles.ImageB}
-          >
-            <View style={styles.ImageX}>
-              <Image
-                source={require("../assets/img/logo.png")}
-                alt=" ImagePharmacie"
+  return (
+    <NativeBaseProvider>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../assets/img/B13.png")}
+          style={styles.ImageB}
+        >
+          <View style={styles.ImageX}>
+            <Image
+              source={require("../assets/img/logo.png")}
+              alt=" ImagePharmacie"
+            />
+          </View>
+
+          <View style={styles.Middle}>
+            <Text style={styles.BiText}>PHARMA</Text>
+          </View>
+          <View style={styles.Middle}>
+            <Text style={styles.Bi1Text}>mobile</Text>
+          </View>
+
+          {/* Username or Email Input field */}
+
+          <View style={styles.buttonStyleX}>
+            <View style={styles.emailInput}>
+              <Input
+                InputLeftElement={
+                  <Icon
+                    as={<FontAwesome5 name="user-secret" />}
+                    size="xs"
+                    m={2}
+                    _light={{
+                      color: "black",
+                    }}
+                    _dark={{
+                      color: "blueGray.400",
+                    }}
+                  />
+                }
+                variant="rounded"
+                placeholder="login"
+                onChangeText={(text) => {
+                  setUsername(text);
+                }}
+                value={username}
+                _light={{
+                  placeholderTextColor: "blueGray.400",
+                }}
+                _dark={{
+                  placeholderTextColor: "blueGray.50",
+                }}
               />
             </View>
+          </View>
 
-            <View style={styles.Middle}>
-              <Text style={styles.BiText}>PHARMA</Text>
+          {/* Password Input field */}
+
+          <View style={styles.buttonStyleX}>
+            <View style={styles.emailInput}>
+              <Input
+                InputLeftElement={
+                  <Icon
+                    as={<FontAwesome5 name="key" />}
+                    size="xs"
+                    m={2}
+                    _light={{
+                      color: "black",
+                    }}
+                    _dark={{
+                      color: "grey.300",
+                    }}
+                  />
+                }
+                variant="rounded"
+                secureTextEntry={true}
+                placeholder="Mot de passe"
+                onChangeText={(text) => {
+                  setPassword(text);
+                }}
+                value={password}
+                _light={{
+                  placeholderTextColor: "blueGray.400",
+                }}
+                _dark={{
+                  placeholderTextColor: "blueGray.50",
+                }}
+              />
             </View>
-            <View style={styles.Middle}>
-              <Text style={styles.Bi1Text}>mobile</Text>
-            </View>
+          </View>
 
-            {/* Username or Email Input field */}
+          {/*Button connexion */}
 
-            <View style={styles.buttonStyleX}>
-              <View style={styles.emailInput}>
-                <Input
-                  InputLeftElement={
-                    <Icon
-                      as={<FontAwesome5 name="user-secret" />}
-                      size="xs"
-                      m={2}
-                      _light={{
-                        color: "black",
-                      }}
-                      _dark={{
-                        color: "blueGray.400",
-                      }}
-                    />
-                  }
-                  variant="rounded"
-                  placeholder="login"
-                  onChangeText={(text) => {
-                    this.username = text;
-                  }}
-                  value={this.username}
-                  _light={{
-                    placeholderTextColor: "blueGray.400",
-                  }}
-                  _dark={{
-                    placeholderTextColor: "blueGray.50",
-                  }}
-                />
+          <View style={styles.buttonStyle}>
+            <TouchableHighlight onPress={saveButton}>
+              <View>
+                <Button style={styles.buttonDesign}> CONNEXION</Button>
+                <Text style={styles.error}>{error}</Text>
               </View>
-            </View>
+            </TouchableHighlight>
+          </View>
 
-            {/* Password Input field */}
+          {/*Signup*/}
 
-            <View style={styles.buttonStyleX}>
-              <View style={styles.emailInput}>
-                <Input
-                  InputLeftElement={
-                    <Icon
-                      as={<FontAwesome5 name="key" />}
-                      size="xs"
-                      m={2}
-                      _light={{
-                        color: "black",
-                      }}
-                      _dark={{
-                        color: "grey.300",
-                      }}
-                    />
-                  }
-                  variant="rounded"
-                  secureTextEntry={true}
-                  placeholder="Mot de passe"
-                  onChangeText={(text) => {
-                    this.password = text;
-                  }}
-                  value={this.password}
-                  _light={{
-                    placeholderTextColor: "blueGray.400",
-                  }}
-                  _dark={{
-                    placeholderTextColor: "blueGray.50",
-                  }}
-                />
-              </View>
-            </View>
-
-            {/*Button connexion */}
-
-            <View style={styles.buttonStyle}>
-              <TouchableHighlight onPress={this.saveButton}>
-                <View>
-                  <Button style={styles.buttonDesign}> CONNEXION</Button>
-                  <Text style={styles.error}>{this.state.error}</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-
-            {/*Signup*/}
-
-            <View style={styles.text1}>
-              <Text>Vous n'avez pas un compte ? </Text>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Signup")}
-              >
-                <Text style={styles.signupText}> S'INSCRIRE </Text>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
-        </View>
-      </NativeBaseProvider>
-    );
-  }
-}
+          <View style={styles.text1}>
+            <Text>Vous n'avez pas un compte ? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+              <Text style={styles.signupText}> S'INSCRIRE </Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
+    </NativeBaseProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -262,5 +252,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#2DA539",
   },
 });
-
+export default Login;
 AppRegistry.registerComponent("navigation", () => Login);
