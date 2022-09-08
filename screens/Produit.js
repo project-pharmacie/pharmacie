@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const Mon_URL = "http://192.168.1.54:4000";
 
-function Produit(props) {
+function Produit({}) {
   const navigation = useNavigation();
   const [value, setValue] = useState(null);
   const [produit, setproduit] = useState([]);

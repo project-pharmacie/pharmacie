@@ -29,9 +29,6 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const Mon_URL = "http://192.168.1.54:4000";
-
-
-
   // Boutton Connexion
 
   saveButton = () => {
@@ -50,13 +47,12 @@ const Login = ({ navigation }) => {
       .then((response) => {
         if (response.ok) {
           return response.json();
-          
         }
         throw new Error(response.statusText);
       })
       .then((jsonData) => {
         localStorage.setItem("username", JSON.stringify(jsonData.username));
-
+        localStorage.setItem("etat", JSON.stringify(jsonData.role));
         navigation.navigate("Acceuil");
       })
       .catch(() => {
