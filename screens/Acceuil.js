@@ -22,7 +22,7 @@ import 'localstorage-polyfill';
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Mon_URL = "http://192.168.1.54:4000";
+const Mon_URL = "http://192.168.1.100:4000";
 
 function Acceuil(props) {
   const navigation = useNavigation();
