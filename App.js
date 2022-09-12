@@ -2,9 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import DrawerContent from "./Drawer/DrawerContent";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import AboutNavigation from "./Navigation/GlobalNavigation";
-import AdminNavigation from "./Navigation/GlobalNavigation";
 import { NativeBaseProvider } from "native-base";
-import Login from "./screens/Login";
 import React, { useState } from "react";
 
 const Drawer = createDrawerNavigator();

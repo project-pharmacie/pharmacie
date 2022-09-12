@@ -1,26 +1,45 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
+import React, { useState, setState, useEffect } from "react";
+
+import { StyleSheet, Text, View, FlatList, SafeAreaView ,Alert} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import "localstorage-polyfill";
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ nom, etat }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{nom}</Text>
-    <Text style={styles.etat}>{etat}</Text>
-  </View>
-);
+const Item = ({ nom, Navigation,etat }) => {
+  const [clickedProduit , setClickedProduit] = useState(Object);
+
+  return (
+    <View style={styles.item}>
+      <Text
+        style={styles.title}
+        onPress={() => {
+          
+            Navigation.navigate("DetailProduit"),
+            setClickedProduit(nom, etat)
+            console.log(setClickedProduit({nom: nom , etat: etat}))
+        }}
+      >
+        {nom}
+      </Text>
+    </View>
+  );
+};
 
 // the filter
-const List = ({ searchPhrase, setClicked, data }) => {
- 
+const List = ({ searchPhrase, setClicked, data, setClickedProduit }) => {
+  const Navigation = useNavigation();
+
   const renderItem = ({ item }) => {
     // when no input, show all
-    console.log(
-      item.nom
-        .toUpperCase()
-        .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
-    );
     if (searchPhrase === "") {
-      return <Item nom={item.nom} etat={item.etat} />;
+      return (
+        <Item
+          etat={item.etat}
+          nom={item.nom}
+          Navigation={Navigation}
+          setClickedProduit={setClickedProduit}
+        />
+      );
     }
     // filter of the nom
     if (
@@ -28,7 +47,13 @@ const List = ({ searchPhrase, setClicked, data }) => {
         .toUpperCase()
         .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
     ) {
-      return <Item nom={item.nom} etat={item.etat} />;
+      return (
+        <Item
+          nom={item.nom}
+          Navigation={Navigation}
+          setClickedProduit={setClickedProduit}
+        />
+      );
     }
     // filter of the description
     if (
@@ -36,7 +61,13 @@ const List = ({ searchPhrase, setClicked, data }) => {
         .toUpperCase()
         .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
     ) {
-      return <Item nom={item.nom} etat={item.etat} />;
+      return (
+        <Item
+          nom={item.nom}
+          Navigation={Navigation}
+          setClickedProduit={setClickedProduit}
+        />
+      );
     }
   };
 
@@ -61,10 +92,11 @@ export default List;
 const styles = StyleSheet.create({
   list__container: {
     margin: 10,
-    height: "85%",
+    height: "45%",
     width: "100%",
   },
   item: {
+    alignItems: "center",
     margin: 30,
     borderBottomWidth: 2,
     borderBottomColor: "lightgrey",

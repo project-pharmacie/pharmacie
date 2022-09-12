@@ -17,17 +17,28 @@ import {
   AspectRatio,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-const Mon_URL = "http://192.168.1.20:4000";
+
+import 'localstorage-polyfill';
+
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const Mon_URL = "http://192.168.1.100:4000";
 
 function Acceuil(props) {
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const [username, setusername] = useState("user");
+  const [nickname, setNickname] = useState();
 
-  
-
-
-
+  const getData = async () => {
+    console.log('hello world')
+    const items = JSON.parse(localStorage.getItem('username'));
+    console.log('doyou ',items)
+    if (items) {
+      console.log('im her',items)
+      setusername(items);
+    }
+  }
 
   GetUser = () => {
     axios.get(Mon_URL + "/user/current").then((response) => {
@@ -36,7 +47,7 @@ function Acceuil(props) {
     });
   };
   useEffect(() => {
-    GetUser();
+    getData()
   }, []);
 
   // function updateSearch(value) {
@@ -83,7 +94,7 @@ function Acceuil(props) {
           </View>
 
           <View style={styles.button2}>
-            <TouchableHighlight >
+            <TouchableHighlight>
               <Button
                 style={styles.buttonDesign}
                 onPress={() => navigation.navigate("Produit")}
@@ -91,11 +102,10 @@ function Acceuil(props) {
                 <Text style={styles.textbu}> Produits</Text>
               </Button>
             </TouchableHighlight>
-
           </View>
         </View>
         <View style={styles.button3}>
-          <TouchableHighlight >
+          <TouchableHighlight>
             <Button
               style={styles.buttonDesign3}
               onPress={() => navigation.navigate("Localisation")}

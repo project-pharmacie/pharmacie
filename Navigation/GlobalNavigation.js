@@ -31,10 +31,7 @@ const GlobalNavigation =(props) =>{
             <Stack.Screen options={{headerShown: false}} name='Produit' component={Produit}/>
             <Stack.Screen options={{headerShown: false}} name='Pharmacie' component={Pharmacie}/>
              <Stack.Screen  options={{headerShown: false}} name='Localisation' component={Localisation}/> 
-            <Stack.Screen  options={{headerShown: false}} name='Admin' component={Admin}/>
-            <Stack.Screen  options={{headerShown: false}} name='AdminPr' component={AdminPr}/>
-            <Stack.Screen  options={{headerShown: false}} name='AdminPa' component={AdminPa}/>
-            <Stack.Screen  options={{headerShown: false}} name='AdminPh' component={AdminPh}/>         
+
                        
      </Stack.Navigator>
     )

@@ -9,23 +9,21 @@ import {
   SafeAreaView,
   ActivityIndicator,
 } from "react-native";
-
+import DetailProduit from "./DetailProduit";
 import List from "../Shared/List";
 import SearchBar from "../Shared/SearchBar";
 import { NativeBaseProvider, Image } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import Searchbar from "../Shared/SearchBar";
 
-const Mon_URL = "http://192.168.1.20:4000";
+const Mon_URL = "http://192.168.1.54:4000";
 
-function Produit(props) {
+function Produit() {
   const navigation = useNavigation();
   const [value, setValue] = useState(null);
   const [produit, setproduit] = useState([]);
   const [error, setError] = useState(null);
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-  const [fakeData, setFakeData] = useState();
 
   useEffect(() => {
     axios.get(Mon_URL + "/produit/").then((res) => {
@@ -35,13 +33,14 @@ function Produit(props) {
     chercheProduitN();
   }, [value]);
 
-
   chercheProduitN = () => {
     axios.get(Mon_URL + "/produit/" + value).then((res) => {
       //console.log(res.data , "=>>>>>>>>")
       setproduit(res.data);
     });
   };
+    
+
 
   return (
     <View style={styles.container}>
@@ -73,12 +72,13 @@ function Produit(props) {
               />
             </View>
           </View>
-          <View style={styles.container}>            
-          <List
-            searchPhrase={searchPhrase}
-            data={produit}
-            setClicked={setClicked}
-          />
+          <View style={styles.container}>
+            <List
+              searchPhrase={searchPhrase}
+              data={produit}
+              setClicked={setClicked}
+            />
+
           </View>
         </SafeAreaView>
       </View>
@@ -103,9 +103,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "white",
-     height: "200%",
+    height: "200%",
     width: "100%",
-    
   },
 
   flatList: {

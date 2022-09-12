@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import { useState, React, useEffect } from "react";
+
 import {
   AppRegistry,
   ImageBackground,
@@ -24,26 +25,20 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { CheckBox } from "react-native-elements";
+// import RNPickerSelect from "react-native-picker-select";
 import { TouchableHighlight } from "react-native-gesture-handler";
+import RNPickerSelect from "react-native-picker-select";
 
-const Mon_URL = "http://192.168.1.20:4000";
+export default Signup = ({ navigation }) => {
+  const Mon_URL = "http://192.168.1.54:4000";
 
-export default class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      apiData: [],
-      naData: [],
-    };
-    this.id = null;
-    this.username = null;
-    this.email = null;
-    this.password = null;
-    this.adress = null;
-    this.role = null;
-  }
-
+  const [id, setid] = useState(String);
+  const [username, setusername] = useState(String);
+  const [email, setemail] = useState(String);
+  const [password, setpassword] = useState(String);
+  const [adress, setadress] = useState(String);
+  const [role, setrole] = useState(String);
+  const [naData, setnaData] = useState([]);
   // button Enregistrer
 
   saveButton = () => {
@@ -54,11 +49,11 @@ export default class Signup extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        adress: this.adress,
-        role: this.role,
+        username: username,
+        email: email,
+        password: password,
+        adress: adress,
+        role: role,
       }),
     })
       .then((response) => {
@@ -68,273 +63,265 @@ export default class Signup extends Component {
         throw new Error(response.statusText);
       })
       .then((jsonData) => {
-        this.setState({ naData: jsonData });
+        setnaData(jsonData);
         console.log("jsonData", jsonData);
         Alert.alert("Inscription réussie ! Veuillez se connecter !");
-        this.props.navigation.navigate("Login");
+        navigation.navigate("Login");
       })
       .catch((error) => {
         console.log("error", error);
         Alert.alert("veuillez remplir les champs de formulaire !!");
       });
-    this.id = null;
-    this.username = null;
-    this.email = null;
-    this.password = null;
-    this.adress = null;
-    this.role = null;
+    setid(null);
+    setusername(null);
+    setemail(null);
+    setpassword(null);
+    setadress(null);
+    setrole(null);
   };
 
-  render() {
-    return (
-      <NativeBaseProvider>
-        <ScrollView>
-          <View style={styles.container}>
-            <ImageBackground
-              source={require("../assets/img/B13.png")}
-              style={styles.ImageB}
-            >
-              <View style={styles.Middle}>
-                <Text style={styles.BiText}>PHARMA</Text>
-                <Text style={styles.Bi1Text}>mobile</Text>
-                <Text style={styles.Bi2Text}>Crèer votre compte</Text>
+  return (
+    <NativeBaseProvider>
+      <ScrollView>
+        <View style={styles.container}>
+          <ImageBackground
+            source={require("../assets/img/B13.png")}
+            style={styles.ImageB}
+          >
+            <View style={styles.Middle}>
+              <Text style={styles.BiText}>PHARMA</Text>
+              <Text style={styles.Bi1Text}>mobile</Text>
+              <Text style={styles.Bi2Text}>Crèer votre compte</Text>
+            </View>
+
+            {/* UserName*/}
+
+            <View style={styles.buttonStyleX}>
+              <View style={styles.emailInput}>
+                <Input
+                  InputLeftElement={
+                    <Icon
+                      as={<FontAwesome5 name="user-secret" />}
+                      size="xs"
+                      m={2}
+                      _light={{
+                        color: "black",
+                      }}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    />
+                  }
+                  variant="rounded"
+                  placeholder="Nom"
+                  onChangeText={(text) => {
+                    setusername(text);
+                  }}
+                  value={username}
+                  _light={{
+                    placeholderTextColor: "blueGray.400",
+                  }}
+                  _dark={{
+                    placeholderTextColor: "blueGray.50",
+                  }}
+                />
               </View>
+            </View>
 
-              {/* UserName*/}
+            {/* Email*/}
 
-              <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                  <Input
-                    InputLeftElement={
-                      <Icon
-                        as={<FontAwesome5 name="user-secret" />}
-                        size="xs"
-                        m={2}
-                        _light={{
-                          color: "black",
-                        }}
-                        _dark={{
-                          color: "gray.300",
-                        }}
-                      />
-                    }
-                    variant="rounded"
-                    placeholder="Nom"
-                    onChangeText={(text) => {
-                      this.username = text;
-                    }}
-                    value={this.username}
-                    _light={{
-                      placeholderTextColor: "blueGray.400",
-                    }}
-                    _dark={{
-                      placeholderTextColor: "blueGray.50",
-                    }}
-                  />
-                </View>
+            <View style={styles.buttonStyleX}>
+              <View style={styles.emailInput}>
+                <Input
+                  InputLeftElement={
+                    <Icon
+                      as={<MaterialCommunityIcons name="email" />}
+                      size="xs"
+                      m={2}
+                      _light={{
+                        color: "black",
+                      }}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    />
+                  }
+                  variant="rounded"
+                  placeholder="Email"
+                  onChangeText={(text) => {
+                    setemail(text);
+                  }}
+                  value={email}
+                  _light={{
+                    placeholderTextColor: "blueGray.400",
+                  }}
+                  _dark={{
+                    placeholderTextColor: "blueGray.50",
+                  }}
+                />
               </View>
+            </View>
 
-              {/* Email*/}
+            {/* Address*/}
 
-              <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                  <Input
-                    InputLeftElement={
-                      <Icon
-                        as={<MaterialCommunityIcons name="email" />}
-                        size="xs"
-                        m={2}
-                        _light={{
-                          color: "black",
-                        }}
-                        _dark={{
-                          color: "gray.300",
-                        }}
-                      />
-                    }
-                    variant="rounded"
-                    placeholder="Email"
-                    onChangeText={(text) => {
-                      this.email = text;
-                    }}
-                    value={this.email}
-                    _light={{
-                      placeholderTextColor: "blueGray.400",
-                    }}
-                    _dark={{
-                      placeholderTextColor: "blueGray.50",
-                    }}
-                  />
-                </View>
+            <View style={styles.buttonStyleX}>
+              <View style={styles.emailInput}>
+                <Input
+                  InputLeftElement={
+                    <Icon
+                      as={<FontAwesome name="address-book" />}
+                      size="xs"
+                      m={2}
+                      _light={{
+                        color: "black",
+                      }}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    />
+                  }
+                  variant="rounded"
+                  placeholder="Adresse"
+                  onChangeText={(text) => {
+                    setadress(text);
+                  }}
+                  value={adress}
+                  _light={{
+                    placeholderTextColor: "blueGray.400",
+                  }}
+                  _dark={{
+                    placeholderTextColor: "blueGray.50",
+                  }}
+                />
               </View>
+            </View>
 
-              {/* Address*/}
+            {/* Password*/}
 
-              <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                  <Input
-                    InputLeftElement={
-                      <Icon
-                        as={<FontAwesome name="address-book" />}
-                        size="xs"
-                        m={2}
-                        _light={{
-                          color: "black",
-                        }}
-                        _dark={{
-                          color: "gray.300",
-                        }}
-                      />
-                    }
-                    variant="rounded"
-                    placeholder="Adresse"
-                    onChangeText={(text) => {
-                      this.adress = text;
-                    }}
-                    value={this.adress}
-                    _light={{
-                      placeholderTextColor: "blueGray.400",
-                    }}
-                    _dark={{
-                      placeholderTextColor: "blueGray.50",
-                    }}
-                  />
-                </View>
+            <View style={styles.buttonStyleX}>
+              <View style={styles.emailInput}>
+                <Input
+                  InputLeftElement={
+                    <Icon
+                      as={<FontAwesome5 name="key" />}
+                      size="xs"
+                      m={2}
+                      _light={{
+                        color: "black",
+                      }}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    />
+                  }
+                  variant="rounded"
+                  secureTextEntry={true}
+                  placeholder="Mot de passe"
+                  onChangeText={(text) => {
+                    setpassword(text);
+                  }}
+                  value={password}
+                  _light={{
+                    placeholderTextColor: "blueGray.400",
+                  }}
+                  _dark={{
+                    placeholderTextColor: "blueGray.50",
+                  }}
+                />
               </View>
+            </View>
 
-              {/* Password*/}
+            {/* Password Confirmation */}
 
-              <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                  <Input
-                    InputLeftElement={
-                      <Icon
-                        as={<FontAwesome5 name="key" />}
-                        size="xs"
-                        m={2}
-                        _light={{
-                          color: "black",
-                        }}
-                        _dark={{
-                          color: "gray.300",
-                        }}
-                      />
-                    }
-                    variant="rounded"
-                    secureTextEntry={true}
-                    placeholder="Mot de passe"
-                    onChangeText={(text) => {
-                      this.password = text;
-                    }}
-                    value={this.password}
-                    _light={{
-                      placeholderTextColor: "blueGray.400",
-                    }}
-                    _dark={{
-                      placeholderTextColor: "blueGray.50",
-                    }}
-                  />
-                </View>
+            <View style={styles.buttonStyleX}>
+              <View style={styles.emailInput}>
+                <Input
+                  InputLeftElement={
+                    <Icon
+                      as={<FontAwesome5 name="key" />}
+                      size="xs"
+                      m={2}
+                      _light={{
+                        color: "black",
+                      }}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    />
+                  }
+                  variant="rounded"
+                  secureTextEntry={true}
+                  placeholder="Confirmation Mot de passe"
+                  _light={{
+                    placeholderTextColor: "blueGray.400",
+                  }}
+                  _dark={{
+                    placeholderTextColor: "blueGray.50",
+                  }}
+                />
               </View>
+            </View>
+            <View style={styles.Bi3Text}>
+              <Text> *Role:Patient ou Pharmacien</Text>
+            </View>
 
-              {/* Password Confirmation */}
+            {/* Role */}
 
-              <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                  <Input
-                    InputLeftElement={
-                      <Icon
-                        as={<FontAwesome5 name="key" />}
-                        size="xs"
-                        m={2}
-                        _light={{
-                          color: "black",
-                        }}
-                        _dark={{
-                          color: "gray.300",
-                        }}
-                      />
-                    }
-                    variant="rounded"
-                    secureTextEntry={true}
-                    placeholder="Confirmation Mot de passe"
-                    _light={{
-                      placeholderTextColor: "blueGray.400",
-                    }}
-                    _dark={{
-                      placeholderTextColor: "blueGray.50",
-                    }}
-                  />
-                </View>
+            <View style={styles.buttonStyleX}>
+              <View style={styles.picker}>
+                <RNPickerSelect
+                  onValueChange={(value) => setrole(value)}
+                  placeholder={{
+                    label: "Select your Role",
+                    value: null,
+                  }}
+                  _light={{
+                    placeholderTextColor: "blueGray.400",
+                  }}
+                  items={[
+                    { label: "Patient", value: "Patient" },
+                    { label: "Pharmacien", value: "Pharmacien" },
+                  ]}
+                />
               </View>
+            </View>
 
-              <Text style={styles.Bi3Text}> *Role:Patient ou Pharmacien</Text>
+            {/*Button Enregistrer*/}
+            <View style={styles.buttonStyle}>
+              <TouchableHighlight onPress={saveButton}>
+                <Button style={styles.buttonDesign}> S'INSCRIRE</Button>
+              </TouchableHighlight>
+            </View>
 
-              {/* Role */}
+            {/*Signup*/}
 
-              <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                  <Input
-                    InputLeftElement={
-                      <Icon
-                        as={<FontAwesome5 name="user-secret" />}
-                        size="xs"
-                        m={2}
-                        _light={{
-                          color: "black",
-                        }}
-                        _dark={{
-                          color: "gray.300",
-                        }}
-                      />
-                    }
-                    variant="rounded"
-                    secureTextEntry={false}
-                    placeholder="Choisissez votre role"
-                    onChangeText={(text) => {
-                      this.role = text;
-                    }}
-                    value={this.role}
-                    _light={{
-                      placeholderTextColor: "blueGray.400",
-                    }}
-                    _dark={{
-                      placeholderTextColor: "blueGray.50",
-                    }}
-                  />
-                </View>
-              </View>
-
-              {/*Button Enregistrer*/}
-              <View style={styles.buttonStyle}>
-                <TouchableHighlight onPress={this.saveButton}>
-                  <Button style={styles.buttonDesign}> S'INSCRIRE</Button>
-                </TouchableHighlight>
-              </View>
-
-              {/*Signup*/}
-
-              <View style={styles.text2}>
-                <Text>Vous avez un compte ? </Text>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate("Login")}
-                >
-                  <Text style={styles.logText}> SE CONNECTER</Text>
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>
-          </View>
-        </ScrollView>
-      </NativeBaseProvider>
-    );
-  }
-}
+            <View style={styles.text2}>
+              <Text>Vous avez un compte ? </Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.logText}> SE CONNECTER</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </View>
+      </ScrollView>
+    </NativeBaseProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
+  picker: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: "purple",
+    borderRadius: 8,
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
   checkT: {
     paddingTop: 16,
     fontFamily: "monospace",
@@ -377,9 +364,10 @@ const styles = StyleSheet.create({
   },
 
   Bi3Text: {
+    alignItems: "center",
     paddingTop: 10,
     fontFamily: "monospace",
-    fontSize: 10,
+    fontSize: 20,
     // marginRight:180,
   },
 
