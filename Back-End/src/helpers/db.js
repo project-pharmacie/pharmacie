@@ -20,6 +20,7 @@ async function initialize() {
     db.User = require('../models/user.model')(sequelize);
     db.produit = require('../models/produit.model')(sequelize);
     db.pharmacie = require('../models/pharmacie.model')(sequelize);
+    db.Admin = require('../models/admin.model')(sequelize);
 
 
     // sync all models with database
