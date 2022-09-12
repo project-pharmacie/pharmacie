@@ -18,14 +18,16 @@ import {
   AspectRatio,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import "localstorage-polyfill";
 
-function DetailProduit(props) {
+function DetailProduit({clickedProduit}) {
   const [Role, setRole] = useState(true);
+  const [id, setid] = useState("");
+
   const data = JSON.parse(localStorage.getItem("etat"));
+
   console.log("Role  ", data);
   useEffect(() => {
-    data === "Pharmacien" ? setRole(false) : setRole(true);
+    data === "Pharmacien" ? setRole(false) : setRole(!false);
   }, [Role]);
   return (
     <View style={styles.container}>
@@ -41,7 +43,9 @@ function DetailProduit(props) {
             <Text style={styles.BiText}>Nom du produit: </Text>
           </View>
           <View style={styles.Middle}>
-            <Text style={styles.Bi1Text}>Etat de la disponibilité: </Text>
+            <Text style={styles.Bi1Text}>
+              Etat de la disponibilité: 
+            </Text>
           </View>
         </View>
       ) : (

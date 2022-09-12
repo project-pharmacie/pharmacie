@@ -51,7 +51,8 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "0.17.7",
     "react-timer-mixin": "^0.13.4",
-    "sequelize": "^6.20.1"
+    "sequelize": "^6.20.1",
+    "vector": "0.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
