@@ -6,7 +6,6 @@ import {
   TouchableHighlight,
   ImageBackground,
 } from "react-native";
-import axios from "axios";
 import {
   Input,
   NativeBaseProvider,
@@ -18,36 +17,32 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
-import 'localstorage-polyfill';
+import "localstorage-polyfill";
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Mon_URL = "http://192.168.1.100:4000";
 
 function Acceuil(props) {
+
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const [username, setusername] = useState("user");
   const [nickname, setNickname] = useState();
 
   const getData = async () => {
-    console.log('hello world')
-    const items = JSON.parse(localStorage.getItem('username'));
-    console.log('doyou ',items)
+    console.log("hello world");
+    const items = JSON.parse(localStorage.getItem("username"));
+    console.log("doyou ", items);
     if (items) {
-      console.log('im her',items)
+      console.log("im her", items);
       setusername(items);
     }
-  }
-
-  GetUser = () => {
-    axios.get(Mon_URL + "/user/current").then((response) => {
-      setusername(response.data);
-      console.log(props.jsonData);
-    });
   };
+
+
   useEffect(() => {
-    getData()
+    getData();
   }, []);
 
   // function updateSearch(value) {
@@ -58,7 +53,7 @@ function Acceuil(props) {
     <View style={styles.container}>
       <ImageBackground
         source={require("../assets/img/B13.png")}
-        style={styles.ImageB}
+      
       >
         <View style={styles.ImageX}>
           <Image

@@ -20,7 +20,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://192.168.1.54:4000/admin/authenticate";
+      const url = "http://192.168.1.100:4000/admin/authenticate";
       await axios.post(url, data).then((response) => {
         if (
           response.data === "Invalid Password" ||

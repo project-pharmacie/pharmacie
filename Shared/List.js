@@ -1,22 +1,28 @@
-import React, { useState, setState, useEffect } from "react";
+import React from "react";
 
-import { StyleSheet, Text, View, FlatList, SafeAreaView ,Alert} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  Image,
+} from "react-native";
 import "localstorage-polyfill";
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ nom, Navigation,etat }) => {
-  const [clickedProduit , setClickedProduit] = useState(Object);
-
+const Item = ({ nom, navigation, etat, photo }) => {
   return (
     <View style={styles.item}>
+      <Image source={{ uri: photo }} style={styles.photo} />
+
       <Text
         style={styles.title}
         onPress={() => {
-          
-            Navigation.navigate("DetailProduit"),
-            setClickedProduit(nom, etat)
-            console.log(setClickedProduit({nom: nom , etat: etat}))
+          // using navigation to get some data to desplay in DetailProduit
+          navigation.navigate("DetailProduit", {
+            data: { nom: nom, etat: etat, photo: photo },
+          });
         }}
       >
         {nom}
@@ -26,18 +32,17 @@ const Item = ({ nom, Navigation,etat }) => {
 };
 
 // the filter
-const List = ({ searchPhrase, setClicked, data, setClickedProduit }) => {
-  const Navigation = useNavigation();
-
+const List = ({ searchPhrase, setClicked, data, navigation }) => {
   const renderItem = ({ item }) => {
     // when no input, show all
     if (searchPhrase === "") {
+      console.log("renderItemPHoto", item);
       return (
         <Item
+          photo={item.photo}
           etat={item.etat}
           nom={item.nom}
-          Navigation={Navigation}
-          setClickedProduit={setClickedProduit}
+          navigation={navigation}
         />
       );
     }
@@ -47,27 +52,15 @@ const List = ({ searchPhrase, setClicked, data, setClickedProduit }) => {
         .toUpperCase()
         .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
     ) {
-      return (
-        <Item
-          nom={item.nom}
-          Navigation={Navigation}
-          setClickedProduit={setClickedProduit}
-        />
-      );
+      return <Item nom={item.nom} navigation={navigation} />;
     }
-    // filter of the description
+    // filter of the etat
     if (
       item.etat
         .toUpperCase()
         .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
     ) {
-      return (
-        <Item
-          nom={item.nom}
-          Navigation={Navigation}
-          setClickedProduit={setClickedProduit}
-        />
-      );
+      return <Item nom={item.nom} navigation={navigation} />;
     }
   };
 
@@ -93,17 +86,27 @@ const styles = StyleSheet.create({
   list__container: {
     margin: 10,
     height: "45%",
-    width: "100%",
+    width: "85%",
+  },
+  photo: {
+    width: 40,
+    height: 40,
+    borderRadius: 100,
   },
   item: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    margin: 30,
-    borderBottomWidth: 2,
+    backgroundColor: "#f1f3f6",
+    paddingVertical: 10,
+    paddingHorizontal: "7%",
+    marginVertical: 4,
+    borderRadius: 4,
     borderBottomColor: "lightgrey",
   },
   title: {
+    marginLeft: "25%",
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 5,
     fontStyle: "italic",
   },
