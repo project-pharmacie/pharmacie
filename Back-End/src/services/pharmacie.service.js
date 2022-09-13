@@ -55,7 +55,7 @@ async function update(id, params) {
 }
 
 async function _delete(id) {
-    const pharmacie = await getUser(id);
+    const pharmacie = await getpharmacie(id);
     await pharmacie.destroy();
 }
 
