@@ -1,24 +1,14 @@
-import React, { useState, setState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  SafeAreaView,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, ImageBackground } from "react-native";
 import DetailProduit from "./DetailProduit";
 import List from "../Shared/List";
 import SearchBar from "../Shared/SearchBar";
 import { NativeBaseProvider, Image } from "native-base";
-import { useNavigation } from "@react-navigation/native";
 
-const Mon_URL = "http://192.168.1.54:4000";
+const Mon_URL = "http://192.168.1.100:4000";
 
-function Produit() {
-  const navigation = useNavigation();
+function Produit({ navigation }) {
   const [value, setValue] = useState(null);
   const [produit, setproduit] = useState([]);
   const [error, setError] = useState(null);
@@ -28,6 +18,7 @@ function Produit() {
   useEffect(() => {
     axios.get(Mon_URL + "/produit/").then((res) => {
       let data = res.data;
+      console.log(data);
       setproduit(data);
     });
     chercheProduitN();
@@ -35,68 +26,67 @@ function Produit() {
 
   chercheProduitN = () => {
     axios.get(Mon_URL + "/produit/" + value).then((res) => {
-      //console.log(res.data , "=>>>>>>>>")
       setproduit(res.data);
     });
   };
-    
 
-
-  return (
-    <View style={styles.container}>
-      {/* <View>
-            <Text>{value.title}</Text>
-          </View> */}
-
-      <View
-        style={{ height: "20%", backgroundColor: "white", borderRadius: 10 }}
-      >
-        <SafeAreaView style={styles.root}>
-          <SearchBar
-            searchPhrase={searchPhrase}
-            setSearchPhrase={setSearchPhrase}
-            clicked={clicked}
-            setClicked={setClicked}
-            style={{ marginTop: "18%" }}
-          />
-          <View style={styles.ImageX}>
-            <Image
-              source={require("../assets/img/listegreen.png")}
-              alt=" ImagePharmacie"
-            />
-            <View>
-              <Image
-                style={{ marginRight: "1%", marginLeft: "15%" }}
-                source={require("../assets/img/blocgreen.png")}
-                alt=" ImagePharmacie"
-              />
-            </View>
-          </View>
-          <View style={styles.container}>
-            <List
-              searchPhrase={searchPhrase}
-              data={produit}
-              setClicked={setClicked}
-            />
-
-          </View>
-        </SafeAreaView>
-      </View>
-      <View style={styles.flatList}></View>
-
-      <View style={styles.lineStyle}>
-        <View style={{ flex: 1, height: 1, backgroundColor: "#F8F8F8" }} />
-      </View>
-    </View>
-  );
-}
-export default () => {
   return (
     <NativeBaseProvider>
-      <Produit />
+      <ImageBackground
+        source={require("../assets/img/B13.png")}
+        style={styles.ImageB}
+      >
+        <View style={styles.container}>
+          <View
+            style={{
+              height: "20%",
+              backgroundColor: "white",
+              borderRadius: 10,
+            }}
+          >
+            <SafeAreaView style={styles.root}>
+              <SearchBar
+                searchPhrase={searchPhrase}
+                setSearchPhrase={setSearchPhrase}
+                clicked={clicked}
+                setClicked={setClicked}
+                style={{ marginTop: "18%" }}
+              />
+              <View style={styles.ImageX}>
+                <Image
+                  source={require("../assets/img/listegreen.png")}
+                  alt=" ImagePharmacie"
+                />
+                <View>
+                  <Image
+                    style={{ marginRight: "1%", marginLeft: "15%" }}
+                    source={require("../assets/img/blocgreen.png")}
+                    alt=" ImagePharmacie"
+                  />
+                </View>
+              </View>
+              <View style={styles.container}>
+                <List
+                  searchPhrase={searchPhrase}
+                  data={produit}
+                  setClicked={setClicked}
+                  navigation={navigation}
+                />
+              </View>
+            </SafeAreaView>
+          </View>
+          <View style={styles.flatList}></View>
+
+          <View style={styles.lineStyle}>
+            <View style={{ flex: 1, height: 1, backgroundColor: "#F8F8F8" }} />
+          </View>
+        </View>
+      </ImageBackground>
     </NativeBaseProvider>
   );
-};
+}
+export default Produit;
+
 const styles = StyleSheet.create({
   container: {
     display: "flex",
@@ -104,6 +94,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     height: "200%",
+    width: "100%",
+  },
+  ImageB: {
+    height: "100%",
     width: "100%",
   },
 

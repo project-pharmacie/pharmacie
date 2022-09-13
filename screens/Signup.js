@@ -30,7 +30,7 @@ import { TouchableHighlight } from "react-native-gesture-handler";
 import RNPickerSelect from "react-native-picker-select";
 
 export default Signup = ({ navigation }) => {
-  const Mon_URL = "http://192.168.1.54:4000";
+  const Mon_URL = "http://192.168.1.100:4000";
 
   const [id, setid] = useState(String);
   const [username, setusername] = useState(String);
@@ -41,7 +41,7 @@ export default Signup = ({ navigation }) => {
   const [naData, setnaData] = useState([]);
   // button Enregistrer
 
-  saveButton = () => {
+  const saveButton = () => {
     fetch(Mon_URL + "/user/register", {
       method: "POST",
       headers: {
@@ -81,13 +81,13 @@ export default Signup = ({ navigation }) => {
   };
 
   return (
-    <NativeBaseProvider>
-      <ScrollView>
-        <View style={styles.container}>
           <ImageBackground
             source={require("../assets/img/B13.png")}
             style={styles.ImageB}
           >
+    <NativeBaseProvider>
+      <ScrollView>
+        <View style={styles.container}>
             <View style={styles.Middle}>
               <Text style={styles.BiText}>PHARMA</Text>
               <Text style={styles.Bi1Text}>mobile</Text>
@@ -262,7 +262,7 @@ export default Signup = ({ navigation }) => {
               </View>
             </View>
             <View style={styles.Bi3Text}>
-              <Text> *Role:Patient ou Pharmacien</Text>
+              <Text> *Profile : Patient ou Pharmacien</Text>
             </View>
 
             {/* Role */}
@@ -301,10 +301,10 @@ export default Signup = ({ navigation }) => {
                 <Text style={styles.logText}> SE CONNECTER</Text>
               </TouchableOpacity>
             </View>
-          </ImageBackground>
         </View>
       </ScrollView>
     </NativeBaseProvider>
+          </ImageBackground>
   );
 };
 

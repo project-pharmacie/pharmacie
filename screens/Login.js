@@ -23,15 +23,17 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import "localstorage-polyfill";
 
 const Login = ({ navigation }) => {
+  console.log(navigation,'login');
   const [items, setItems] = useState([]);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const Mon_URL = "http://192.168.1.54:4000";
+  const Mon_URL = "http://192.168.1.100:4000";
   // Boutton Connexion
 
-  saveButton = () => {
+  const saveButton = () => {
+    console.log('saveButton');
     fetch(Mon_URL + "/user/authenticate", {
       method: "POST",
       headers: {
@@ -45,6 +47,7 @@ const Login = ({ navigation }) => {
       }),
     })
       .then((response) => {
+        console.log(response.data);
         if (response.ok) {
           return response.json();
         }
@@ -173,7 +176,7 @@ const Login = ({ navigation }) => {
           </View>
         </ImageBackground>
       </View>
-    </NativeBaseProvider>
+    </NativeBaseProvider> 
   );
 };
 

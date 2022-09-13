@@ -107,7 +107,7 @@ export default () => {
   return (
     <NativeBaseProvider>
       <Pharmacie />
-    </NativeBaseProvider>
+   </NativeBaseProvider> 
   );
 };
 const styles = StyleSheet.create({
