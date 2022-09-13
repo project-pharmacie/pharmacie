@@ -1,24 +1,14 @@
-import React, { useState, setState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  SafeAreaView,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import DetailProduit from "./DetailProduit";
 import List from "../Shared/List";
 import SearchBar from "../Shared/SearchBar";
 import { NativeBaseProvider, Image } from "native-base";
-import { useNavigation } from "@react-navigation/native";
 
-const Mon_URL = "http://192.168.1.54:4000";
+const Mon_URL = "http://192.168.1.100:4000";
 
-function Produit() {
-  const navigation = useNavigation();
+function Produit({ navigation }) {
   const [value, setValue] = useState(null);
   const [produit, setproduit] = useState([]);
   const [error, setError] = useState(null);
@@ -39,64 +29,65 @@ function Produit() {
       setproduit(res.data);
     });
   };
-    
-
 
   return (
-    <View style={styles.container}>
-      {/* <View>
+    <NativeBaseProvider>
+      <View style={styles.container}>
+        {/* <View>
             <Text>{value.title}</Text>
           </View> */}
 
-      <View
-        style={{ height: "20%", backgroundColor: "white", borderRadius: 10 }}
-      >
-        <SafeAreaView style={styles.root}>
-          <SearchBar
-            searchPhrase={searchPhrase}
-            setSearchPhrase={setSearchPhrase}
-            clicked={clicked}
-            setClicked={setClicked}
-            style={{ marginTop: "18%" }}
-          />
-          <View style={styles.ImageX}>
-            <Image
-              source={require("../assets/img/listegreen.png")}
-              alt=" ImagePharmacie"
+        <View
+          style={{ height: "20%", backgroundColor: "white", borderRadius: 10 }}
+        >
+          <SafeAreaView style={styles.root}>
+            <SearchBar
+              searchPhrase={searchPhrase}
+              setSearchPhrase={setSearchPhrase}
+              clicked={clicked}
+              setClicked={setClicked}
+              style={{ marginTop: "18%" }}
             />
-            <View>
+            <View style={styles.ImageX}>
               <Image
-                style={{ marginRight: "1%", marginLeft: "15%" }}
-                source={require("../assets/img/blocgreen.png")}
+                source={require("../assets/img/listegreen.png")}
                 alt=" ImagePharmacie"
               />
+              <View>
+                <Image
+                  style={{ marginRight: "1%", marginLeft: "15%" }}
+                  source={require("../assets/img/blocgreen.png")}
+                  alt=" ImagePharmacie"
+                />
+              </View>
             </View>
-          </View>
-          <View style={styles.container}>
-            <List
-              searchPhrase={searchPhrase}
-              data={produit}
-              setClicked={setClicked}
-            />
+            <View style={styles.container}>
+              <List
+                searchPhrase={searchPhrase}
+                data={produit}
+                setClicked={setClicked}
+                navigation={navigation}
+              />
+            </View>
+          </SafeAreaView>
+        </View>
+        <View style={styles.flatList}></View>
 
-          </View>
-        </SafeAreaView>
+        <View style={styles.lineStyle}>
+          <View style={{ flex: 1, height: 1, backgroundColor: "#F8F8F8" }} />
+        </View>
       </View>
-      <View style={styles.flatList}></View>
-
-      <View style={styles.lineStyle}>
-        <View style={{ flex: 1, height: 1, backgroundColor: "#F8F8F8" }} />
-      </View>
-    </View>
-  );
-}
-export default () => {
-  return (
-    <NativeBaseProvider>
-      <Produit />
     </NativeBaseProvider>
   );
-};
+}
+export default Produit;
+// export default () => {
+//   return (
+//     <NativeBaseProvider>
+//       <Produit />
+//     </NativeBaseProvider>
+//   );
+// };
 const styles = StyleSheet.create({
   container: {
     display: "flex",

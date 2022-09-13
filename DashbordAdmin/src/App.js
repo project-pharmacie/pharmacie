@@ -18,20 +18,6 @@ import ErrorPage from './pages/ErrorPage';
 class App extends Component {
   render() {
     return (
-      
-        // <Routes>
-        //   <Route exact path="/" component={Login} />
-        //   <Route path="/singup" component={Singup} />
-        //   <Route path="/dashboard" component={Dashboard} />
-        //   <Route path="/add-produit" component={AddProduit} />
-        //   <Route path="/produit-list" component={ProduitList} />
-        //   <Route path="/add-client" component={AdddUser} />
-        //   <Route path="/client-list" component={UserList} />
-        //   <Route path="/add-pharmacie" component={AddPharmacie} />
-        //   <Route path="/pharmacie-list" component={PharmacieList} />
-        //   <Route component={ErrorPage} />
-        // </Routes>
-   
      <Routes>
        <Route path="/" element={<Login />}>
        <Route path="/singup" component={Singup} />

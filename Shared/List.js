@@ -1,22 +1,28 @@
-import React, { useState, setState, useEffect } from "react";
+import React from "react";
 
-import { StyleSheet, Text, View, FlatList, SafeAreaView ,Alert} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  Alert,
+} from "react-native";
 import "localstorage-polyfill";
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ nom, Navigation,etat }) => {
-  const [clickedProduit , setClickedProduit] = useState(Object);
+const Item = ({ nom, navigation, etat , photo  }) => {
+
 
   return (
     <View style={styles.item}>
       <Text
         style={styles.title}
         onPress={() => {
-          
-            Navigation.navigate("DetailProduit"),
-            setClickedProduit(nom, etat)
-            console.log(setClickedProduit({nom: nom , etat: etat}))
+    // using navigation to get some data to desplay in DetailProduit
+          navigation.navigate("DetailProduit", {
+            data: { nom: nom, etat: etat  , photo: photo},
+          });
         }}
       >
         {nom}
@@ -26,18 +32,25 @@ const Item = ({ nom, Navigation,etat }) => {
 };
 
 // the filter
-const List = ({ searchPhrase, setClicked, data, setClickedProduit }) => {
-  const Navigation = useNavigation();
+const List = ({
+  searchPhrase,
+  setClicked,
+  data,
+  clickedProduit,
+  setClickedProduit,
+  navigation,
+}) => {
 
   const renderItem = ({ item }) => {
     // when no input, show all
     if (searchPhrase === "") {
+      console.log('renderItemPHoto',item)
       return (
         <Item
+        photo={item.photo}
           etat={item.etat}
           nom={item.nom}
-          Navigation={Navigation}
-          setClickedProduit={setClickedProduit}
+          navigation={navigation}
         />
       );
     }
@@ -47,27 +60,15 @@ const List = ({ searchPhrase, setClicked, data, setClickedProduit }) => {
         .toUpperCase()
         .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
     ) {
-      return (
-        <Item
-          nom={item.nom}
-          Navigation={Navigation}
-          setClickedProduit={setClickedProduit}
-        />
-      );
+      return <Item nom={item.nom} navigation={navigation} />;
     }
-    // filter of the description
+    // filter of the etat
     if (
       item.etat
         .toUpperCase()
         .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
     ) {
-      return (
-        <Item
-          nom={item.nom}
-          Navigation={Navigation}
-          setClickedProduit={setClickedProduit}
-        />
-      );
+      return <Item nom={item.nom} navigation={navigation} />;
     }
   };
 
