@@ -7,6 +7,7 @@ import {
   FlatList,
   SafeAreaView,
   Image,
+  ImageBackground,
 } from "react-native";
 import "localstorage-polyfill";
 
@@ -66,17 +67,17 @@ const List = ({ searchPhrase, setClicked, data, navigation }) => {
 
   return (
     <SafeAreaView style={styles.list__container}>
-      <View
-        onStartShouldSetResponder={() => {
-          setClicked(false);
-        }}
-      >
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+        <View
+          onStartShouldSetResponder={() => {
+            setClicked(false);
+          }}
+        >
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
     </SafeAreaView>
   );
 };

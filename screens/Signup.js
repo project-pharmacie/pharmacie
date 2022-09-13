@@ -81,13 +81,13 @@ export default Signup = ({ navigation }) => {
   };
 
   return (
-    <NativeBaseProvider>
-      <ScrollView>
-        <View style={styles.container}>
           <ImageBackground
             source={require("../assets/img/B13.png")}
             style={styles.ImageB}
           >
+    <NativeBaseProvider>
+      <ScrollView>
+        <View style={styles.container}>
             <View style={styles.Middle}>
               <Text style={styles.BiText}>PHARMA</Text>
               <Text style={styles.Bi1Text}>mobile</Text>
@@ -262,7 +262,7 @@ export default Signup = ({ navigation }) => {
               </View>
             </View>
             <View style={styles.Bi3Text}>
-              <Text> *Role:Patient ou Pharmacien</Text>
+              <Text> *Profile : Patient ou Pharmacien</Text>
             </View>
 
             {/* Role */}
@@ -301,10 +301,10 @@ export default Signup = ({ navigation }) => {
                 <Text style={styles.logText}> SE CONNECTER</Text>
               </TouchableOpacity>
             </View>
-          </ImageBackground>
         </View>
       </ScrollView>
     </NativeBaseProvider>
+          </ImageBackground>
   );
 };
 

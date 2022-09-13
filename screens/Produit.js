@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { StyleSheet, View, SafeAreaView, ImageBackground } from "react-native";
 import DetailProduit from "./DetailProduit";
 import List from "../Shared/List";
 import SearchBar from "../Shared/SearchBar";
@@ -32,49 +32,56 @@ function Produit({ navigation }) {
 
   return (
     <NativeBaseProvider>
-      <View style={styles.container}>
-  
-
-        <View
-          style={{ height: "20%", backgroundColor: "white", borderRadius: 10 }}
-        >
-          <SafeAreaView style={styles.root}>
-            <SearchBar
-              searchPhrase={searchPhrase}
-              setSearchPhrase={setSearchPhrase}
-              clicked={clicked}
-              setClicked={setClicked}
-              style={{ marginTop: "18%" }}
-            />
-            <View style={styles.ImageX}>
-              <Image
-                source={require("../assets/img/listegreen.png")}
-                alt=" ImagePharmacie"
+      <ImageBackground
+        source={require("../assets/img/B13.png")}
+        style={styles.ImageB}
+      >
+        <View style={styles.container}>
+          <View
+            style={{
+              height: "20%",
+              backgroundColor: "white",
+              borderRadius: 10,
+            }}
+          >
+            <SafeAreaView style={styles.root}>
+              <SearchBar
+                searchPhrase={searchPhrase}
+                setSearchPhrase={setSearchPhrase}
+                clicked={clicked}
+                setClicked={setClicked}
+                style={{ marginTop: "18%" }}
               />
-              <View>
+              <View style={styles.ImageX}>
                 <Image
-                  style={{ marginRight: "1%", marginLeft: "15%" }}
-                  source={require("../assets/img/blocgreen.png")}
+                  source={require("../assets/img/listegreen.png")}
                   alt=" ImagePharmacie"
                 />
+                <View>
+                  <Image
+                    style={{ marginRight: "1%", marginLeft: "15%" }}
+                    source={require("../assets/img/blocgreen.png")}
+                    alt=" ImagePharmacie"
+                  />
+                </View>
               </View>
-            </View>
-            <View style={styles.container}>
-              <List
-                searchPhrase={searchPhrase}
-                data={produit}
-                setClicked={setClicked}
-                navigation={navigation}
-              />
-            </View>
-          </SafeAreaView>
-        </View>
-        <View style={styles.flatList}></View>
+              <View style={styles.container}>
+                <List
+                  searchPhrase={searchPhrase}
+                  data={produit}
+                  setClicked={setClicked}
+                  navigation={navigation}
+                />
+              </View>
+            </SafeAreaView>
+          </View>
+          <View style={styles.flatList}></View>
 
-        <View style={styles.lineStyle}>
-          <View style={{ flex: 1, height: 1, backgroundColor: "#F8F8F8" }} />
+          <View style={styles.lineStyle}>
+            <View style={{ flex: 1, height: 1, backgroundColor: "#F8F8F8" }} />
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     </NativeBaseProvider>
   );
 }
@@ -87,6 +94,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     height: "200%",
+    width: "100%",
+  },
+  ImageB: {
+    height: "100%",
     width: "100%",
   },
 
