@@ -1,75 +1,127 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-//Clients
 
-class UserForm extends Component {
-    state = {}
-    render() {
+
+const UserForm =() => {
+   
+    const [data, setData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        adress: "",
+        role: "",
+      });
+
+      const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
+       
+      };
+
+      const handleSubmit =(event)=>{
+        event.preventDefault();
+
+        const user = {
+        username : data.username,
+        email: data.email,
+        password : data.password,
+        adress: data.adress,
+        role: data.role,
+        };
+
+        axios.post(`http://192.168.1.41:4000/user/register`,user)
+        .then((response) =>
+         { 
+           if (response.statusText)
+           {
+               alert(response.data.message)    
+           }
+         })
+   
+        .catch((error) => alert("User Already exists"))
+       
+       }
+
+
         return (
             <>
                 <div className="topic_form">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-lg-6">
                                 <div className="form-group">
                                     <label htmlFor="name">Nom</label>
                                     <input type="text"
                                         className="form-control"
-                                        id="name"
-                                        ref="name"
-                                        name="name"
+                                        id="username"
+                                        onChange={handleChange}
+                                        name="username"
                                         placeholder="Entrer le nom"
+                                        required
                                     />
-                                    {/* <small className="text-danger">{this.state.name}</small> */}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
                                     <input type="email"
                                         className="form-control"
                                         id="email"
-                                        ref="email"
+                                        onChange={handleChange}
                                         name="email"
                                         placeholder="Entrer l'email"
+                                        required
                                     />
-                                    {/* <small className="text-danger">{this.state.start_date}</small> */}
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="email">Adresse</label>
-                                    <input type="address"
-                                        className="form-control"
-                                        id="address"
-                                        ref="address"
-                                        name="address"
-                                        placeholder="Entrer l'adresse"
-                                    />
-                                    {/* <small className="text-danger">{this.state.start_date}</small> */}
-                                    </div>
+                                
                                 <div className="form-group">
                                     <label htmlFor="password">Mot de passe</label>
                                     <input type="password"
                                         className="form-control"
                                         id="password"
-                                        ref="password"
+                                        onChange={handleChange}
                                         name="password"
                                         placeholder="Entrer le mot de passe"
+                                        required
 
                                     />
-                                    {/* <small className="text-danger">{this.state.end_date}</small> */}
                                 </div>
+
+                               
                                 <div className="form-group">
                                     <label htmlFor="password">Confirmer Mot de passe</label>
                                     <input type="password"
                                         className="form-control"
                                         id="password"
-                                        ref="password"
                                         name="password"
                                         placeholder="Entrer le mot de passe"
 
                                     />
-                                    {/* <small className="text-danger">{this.state.end_date}</small> */}
                                 </div>
-                            </div>
-                          
+                                <div className="form-group">
+                                    <label htmlFor="adress">Adresse</label>
+                                    <input type="text"
+                                        className="form-control"
+                                        id="adress"
+                                        onChange={handleChange}
+                                        name="adress"
+                                        placeholder="Entrer l'adresse"
+                                        required
+                                    />
+                                  
+                                    </div>
+                             
+                                <div className="form-group">
+                                    <label htmlFor="Role">Role</label>
+                                    <input type="text"
+                                        className="form-control"
+                                        id="role"
+                                        onChange={handleChange}
+                                        name="role"
+                                        placeholder="Saisir le role"
+                                        required
+                                    />
+
+                                    </div>
+                            </div>                          
                         </div>
                         <button className="btn btn-success btn-sm form-control mb-3 btn_custom">Enregistrer</button>
                     </form>
@@ -77,6 +129,6 @@ class UserForm extends Component {
             </>
         );
     }
-}
+
 
 export default UserForm;

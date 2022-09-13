@@ -5,6 +5,9 @@ import swal from "sweetalert";
 //Pharmacie
 
 class PharmacieTable extends Component {
+   
+   
+   
     state = {}
     // Delete handler
     handleDelete() {

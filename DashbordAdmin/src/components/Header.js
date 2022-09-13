@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 
 class Header extends Component {
     state = {}
@@ -16,9 +17,8 @@ class Header extends Component {
                     </div>
                     <ul className="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="/">
-                                <i className="fa fa-sign-out"></i> Deconnexion
-                            </a>
+                        <nav><Link to={'/'}><i className="fa fa-sign-out"></i> Deconnexion </Link></nav>
+                           
                         </li>
                     </ul>
                 </nav>

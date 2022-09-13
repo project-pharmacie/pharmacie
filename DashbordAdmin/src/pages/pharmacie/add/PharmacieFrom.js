@@ -1,24 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 
-//Pharmacie
 
-class PharmacieFrom extends Component {
-    state = {}
-    render() {
+
+const PharmacieFrom =() => {
+   
+    const [data, setData] = useState({
+        username: "",
+        email: "",
+        telephone: "",
+        adress: "",
+        localisation: "",
+      });
+
+      const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
+       
+      };
+
+      const handleSubmit =(event)=>{
+        event.preventDefault();
+
+        const pharmacie = {
+        username : data.username,
+        email: data.email,
+        telephone : data.telephone,
+        adress: data.adress,
+        localisation: data.localisation,
+        };
+
+        axios.post(`http://192.168.1.41:4000/pharmacie/register`,pharmacie)
+        .then((response) =>
+         { 
+           if (response.statusText)
+           {
+               alert(response.data.message)    
+           }
+         })
+   
+        .catch((error) => alert("Pharmacie Already exists"))
+       
+       }
+
+
         return (
             <>
                 <div className="topic_form">
-                    <form>
+                    <form onSubmit={handleSubmit}>
+                       
                         <div className="row">
                             <div className="col-lg-6">
                                 <div className="form-group">
                                     <label htmlFor="name">Nom</label>
                                     <input type="text"
                                         className="form-control"
-                                        id="name"
-                                        ref="name"
-                                        name="name"
+                                        id="username"
+                                        onChange={handleChange}
+                                        name="username"
                                         placeholder="Entrer le nom"
                                     />
                                     {/* <small className="text-danger">{this.state.name}</small> */}
@@ -28,7 +67,7 @@ class PharmacieFrom extends Component {
                                     <input type="email"
                                         className="form-control"
                                         id="email"
-                                        ref="email"
+                                        onChange={handleChange}
                                         name="email"
                                         placeholder="Entrer l'email"
                                     />
@@ -39,9 +78,9 @@ class PharmacieFrom extends Component {
                                     <label htmlFor="phone">Telephone</label>
                                     <input type="phone"
                                         className="form-control"
-                                        id="phone"
-                                        ref="phone"
-                                        name="phone"
+                                        id="telephone"
+                                        onChange={handleChange}
+                                        name="telephone"
                                         placeholder="Entrer le numero de telephone"
                                     />
                                     {/* <small className="text-danger">{this.state.start_date}</small> */}
@@ -50,9 +89,9 @@ class PharmacieFrom extends Component {
                                     <label htmlFor="email">Adresse</label>
                                     <input type="address"
                                         className="form-control"
-                                        id="address"
-                                        ref="address"
-                                        name="address"
+                                        id="adress"
+                                        onChange={handleChange}
+                                        name="adress"
                                         placeholder="Entrer l'adresse"
                                     />
                                     {/* <small className="text-danger">{this.state.start_date}</small> */}
@@ -62,7 +101,7 @@ class PharmacieFrom extends Component {
                                     <input type="text"
                                         className="form-control"
                                         id="localisation"
-                                        ref="localisation"
+                                        onChange={handleChange}
                                         name="localisation"
                                         placeholder="Entrer la localisation de la pharmacie"
 
@@ -79,6 +118,5 @@ class PharmacieFrom extends Component {
             </>
         );
     }
-}
 
 export default PharmacieFrom;

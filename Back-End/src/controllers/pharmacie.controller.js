@@ -6,7 +6,7 @@ const validateRequest = require('../middleware/validate-request');
 
 function registerSchema(req, res, next) {
   const schema = Joi.object({
-      nom: Joi.string().required(),
+      username: Joi.string().required(),
       email: Joi.string().required(),
       telephone: Joi.string().required(),
       adress: Joi.string().required(),

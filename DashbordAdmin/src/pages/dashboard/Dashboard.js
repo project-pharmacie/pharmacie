@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Widget from './Widget';
 
 class Dashboard extends Component {
+    
     state = {}
     render() {
         return (
