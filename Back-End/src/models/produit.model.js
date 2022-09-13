@@ -6,6 +6,7 @@ function model(sequelize) {
     const attributes = {
     
         nom: { type: DataTypes.STRING, allowNull: false },
+        photo: { type: DataTypes.STRING, allowNull: false },
         etat: { type: DataTypes.STRING, allowNull: false },
     };
 

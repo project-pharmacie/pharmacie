@@ -9,6 +9,8 @@ function registerSchema(req, res, next) {
   const schema = Joi.object({
       nom: Joi.string().required(),
       etat: Joi.string().required(),
+      photo: Joi.string().required(),
+
   });
   validateRequest(req, next, schema);
 }

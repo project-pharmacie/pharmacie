@@ -18,6 +18,7 @@ function Produit({ navigation }) {
   useEffect(() => {
     axios.get(Mon_URL + "/produit/").then((res) => {
       let data = res.data;
+      console.log(data);
       setproduit(data);
     });
     chercheProduitN();
@@ -25,7 +26,6 @@ function Produit({ navigation }) {
 
   chercheProduitN = () => {
     axios.get(Mon_URL + "/produit/" + value).then((res) => {
-      //console.log(res.data , "=>>>>>>>>")
       setproduit(res.data);
     });
   };
@@ -33,9 +33,7 @@ function Produit({ navigation }) {
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
-        {/* <View>
-            <Text>{value.title}</Text>
-          </View> */}
+  
 
         <View
           style={{ height: "20%", backgroundColor: "white", borderRadius: 10 }}
@@ -81,13 +79,7 @@ function Produit({ navigation }) {
   );
 }
 export default Produit;
-// export default () => {
-//   return (
-//     <NativeBaseProvider>
-//       <Produit />
-//     </NativeBaseProvider>
-//   );
-// };
+
 const styles = StyleSheet.create({
   container: {
     display: "flex",

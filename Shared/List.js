@@ -6,22 +6,22 @@ import {
   View,
   FlatList,
   SafeAreaView,
-  Alert,
+  Image,
 } from "react-native";
 import "localstorage-polyfill";
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ nom, navigation, etat , photo  }) => {
-
-
+const Item = ({ nom, navigation, etat, photo }) => {
   return (
     <View style={styles.item}>
+      <Image source={{ uri: photo }} style={styles.photo} />
+
       <Text
         style={styles.title}
         onPress={() => {
-    // using navigation to get some data to desplay in DetailProduit
+          // using navigation to get some data to desplay in DetailProduit
           navigation.navigate("DetailProduit", {
-            data: { nom: nom, etat: etat  , photo: photo},
+            data: { nom: nom, etat: etat, photo: photo },
           });
         }}
       >
@@ -32,22 +32,14 @@ const Item = ({ nom, navigation, etat , photo  }) => {
 };
 
 // the filter
-const List = ({
-  searchPhrase,
-  setClicked,
-  data,
-  clickedProduit,
-  setClickedProduit,
-  navigation,
-}) => {
-
+const List = ({ searchPhrase, setClicked, data, navigation }) => {
   const renderItem = ({ item }) => {
     // when no input, show all
     if (searchPhrase === "") {
-      console.log('renderItemPHoto',item)
+      console.log("renderItemPHoto", item);
       return (
         <Item
-        photo={item.photo}
+          photo={item.photo}
           etat={item.etat}
           nom={item.nom}
           navigation={navigation}
@@ -94,17 +86,27 @@ const styles = StyleSheet.create({
   list__container: {
     margin: 10,
     height: "45%",
-    width: "100%",
+    width: "85%",
+  },
+  photo: {
+    width: 40,
+    height: 40,
+    borderRadius: 100,
   },
   item: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    margin: 30,
-    borderBottomWidth: 2,
+    backgroundColor: "#f1f3f6",
+    paddingVertical: 10,
+    paddingHorizontal: "7%",
+    marginVertical: 4,
+    borderRadius: 4,
     borderBottomColor: "lightgrey",
   },
   title: {
+    marginLeft: "25%",
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 5,
     fontStyle: "italic",
   },

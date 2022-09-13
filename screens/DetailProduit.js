@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Switch } from "react-native";
+import { StyleSheet, View, Text, Switch, TouchableOpacity  , Dismensions} from "react-native";
 import { NativeBaseProvider, Image } from "native-base";
 
 import "localstorage-polyfill";
+const Screen = Dismensions.get('window')
 
 function DetailProduit({ navigation, route }) {
+
   const [isEnabled, setIsEnabled] = useState(true);
   // console.log("route", route.params.data);
   const Detail = route.params.data;
@@ -31,8 +33,8 @@ function DetailProduit({ navigation, route }) {
           <View style={styles.container}>
             <View style={styles.ImageX}>
               <Image
-                source={require("../assets/img/inot1.png")}
-                alt=" ImageProduit"
+                source={{ uri: Detail.photo }}
+                style={{ height: 450, width: 460 }}
               />
             </View>
             <View>
@@ -46,10 +48,22 @@ function DetailProduit({ navigation, route }) {
               </Text>
               <View></View>
             </View>
+            <View>
+              <Text style={{ marginTop: "10%" }}>
+                Trouver votre medicaments ici :{" "}
+              </Text>
+              <TouchableOpacity style={styles.Button}>
+                <Text style={{ marginTop: "10%", marginLeft: "10%" }}>
+                  Pharmacie
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         ) : (
-          <View>
-          <Image source={{src:Detail.photo}} style={{height:450 , width:400}}/>
+          <View style={{ alignItems: "center" }}>
+            <Image style={styles.ImageX}
+              source={{ uri: Detail.photo }}
+            />
             <View
               style={{
                 display: "flex",
@@ -80,7 +94,7 @@ function DetailProduit({ navigation, route }) {
               </View>
             </View>
 
-            <Text>nom : {Detail && Detail.nom}</Text>
+            <Text style={styles.title}>nom : {Detail && Detail.nom}</Text>
           </View>
         )}
       </View>
@@ -103,13 +117,27 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  Button: {
+    display: "flex",
+    alignItems: "center",
+    paddingVertical: 2,
+    backgroundColor: "#ACDA4E",
+    borderRadius: 10,
+    elevation: 2,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+  },
 
   ImageX: {
     //height:'10%',
     alignItems: "center",
-    padding: 20,
-    //height:'20%'
-    paddingBottom: 20,
+    height: Screen.width - 40 - 6,
+    width: Screen.width - 40 - 6,
   },
   BiText: {
     fontFamily: "monospace",
