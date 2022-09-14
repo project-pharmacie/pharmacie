@@ -12,7 +12,7 @@ import {
 import "localstorage-polyfill";
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ nom, navigation, etat, photo }) => {
+const Item = ({ username, telephone, email, photo, navigation }) => {
   return (
     <View style={styles.item}>
       <Image source={{ uri: photo }} style={styles.photo} />
@@ -21,29 +21,35 @@ const Item = ({ nom, navigation, etat, photo }) => {
         style={styles.title}
         onPress={() => {
           // using navigation to get some data to desplay in DetailProduit
-          navigation.navigate("DetailProduit", {
-            data: { nom: nom, etat: etat, photo: photo },
+          navigation.navigate("DetailPharmacie", {
+            pharmacieData: {
+              username: username,
+              telephone: telephone,
+              photo: photo,
+              email: email,
+            },
           });
         }}
       >
-        {nom}
+        {username}
       </Text>
     </View>
   );
 };
 
 // the filter
-const List = ({ searchPhrase, setClicked, data, navigation }) => {
-  
+const ListPharmacie = ({ searchPhrase, setClicked, data, navigation }) => {
   const renderItem = ({ item }) => {
     // when no input, show all
     if (searchPhrase === "") {
       console.log("renderItemPHoto", item);
       return (
         <Item
+          username={item.username}
+          telephone={item.telephone}
+          email={item.email}
           photo={item.photo}
-          etat={item.etat}
-          nom={item.nom}
+          adress={item.adress}
           navigation={navigation}
         />
       );
@@ -56,9 +62,11 @@ const List = ({ searchPhrase, setClicked, data, navigation }) => {
     ) {
       return (
         <Item
+          username={item.username}
+          telephone={item.telephone}
+          email={item.email}
           photo={item.photo}
-          etat={item.etat}
-          nom={item.nom}
+          adress={item.adress}
           navigation={navigation}
         />
       );
@@ -71,9 +79,11 @@ const List = ({ searchPhrase, setClicked, data, navigation }) => {
     ) {
       return (
         <Item
+          username={item.username}
+          telephone={item.telephone}
+          email={item.email}
           photo={item.photo}
-          etat={item.etat}
-          nom={item.nom}
+          adress={item.adress}
           navigation={navigation}
         />
       );
@@ -82,22 +92,27 @@ const List = ({ searchPhrase, setClicked, data, navigation }) => {
 
   return (
     <SafeAreaView style={styles.list__container}>
-      <View
-        onStartShouldSetResponder={() => {
-          setClicked(false);
-        }}
+      <ImageBackground
+        source={require("../assets/img/B13.png")}
+        style={styles.container}
       >
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+        <View
+          onStartShouldSetResponder={() => {
+            setClicked(false);
+          }}
+        >
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
 
-export default List;
+export default ListPharmacie;
 const styles = StyleSheet.create({
   list__container: {
     margin: 10,
@@ -121,9 +136,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "lightgrey",
   },
   title: {
-    marginLeft: "25%",
+    marginLeft: "5%",
     fontSize: 20,
     marginBottom: 5,
     fontStyle: "italic",
+    alignItems: "center",
   },
 });

@@ -23,7 +23,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import "localstorage-polyfill";
 
 const Login = ({ navigation }) => {
-  console.log(navigation,'login');
+  console.log(navigation, "login");
   const [items, setItems] = useState([]);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
@@ -33,7 +33,7 @@ const Login = ({ navigation }) => {
   // Boutton Connexion
 
   const saveButton = () => {
-    console.log('saveButton');
+    console.log("saveButton");
     fetch(Mon_URL + "/user/authenticate", {
       method: "POST",
       headers: {
@@ -176,7 +176,7 @@ const Login = ({ navigation }) => {
           </View>
         </ImageBackground>
       </View>
-    </NativeBaseProvider> 
+    </NativeBaseProvider>
   );
 };
 

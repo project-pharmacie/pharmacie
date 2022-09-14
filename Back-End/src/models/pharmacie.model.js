@@ -10,7 +10,7 @@ function model(sequelize) {
         telephone: { type: DataTypes.STRING, allowNull: false },
         adress: { type: DataTypes.STRING, allowNull: false },
         hash: { type: DataTypes.STRING, allowNull: false },
-        localisation: { type: DataTypes.STRING, allowNull: false },
+        photo : { type: DataTypes.STRING, allowNull: false },
     };
 
     const options = {
