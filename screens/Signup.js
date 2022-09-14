@@ -8,16 +8,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Picker,
 } from "react-native";
 import {
   Input,
   NativeBaseProvider,
   Button,
   Icon,
-  Box,
-  Image,
-  AspectRatio,
-  Checkbox,
   ScrollView,
 } from "native-base";
 import {
@@ -25,13 +22,12 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-// import RNPickerSelect from "react-native-picker-select";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import RNPickerSelect from "react-native-picker-select";
+import axios from "axios";
+const Mon_URL = "http://192.168.1.100:4000";
 
 export default Signup = ({ navigation }) => {
-  const Mon_URL = "http://192.168.1.100:4000";
-
   const [id, setid] = useState(String);
   const [username, setusername] = useState(String);
   const [email, setemail] = useState(String);
@@ -39,7 +35,16 @@ export default Signup = ({ navigation }) => {
   const [adress, setadress] = useState(String);
   const [role, setrole] = useState(String);
   const [naData, setnaData] = useState([]);
+  const [pharmacieList, setPharmacieList] = useState();
+  const [pharmacieName, setPharmaciename] = useState();
   // button Enregistrer
+  const getpharmacieList = () => {
+    axios.get(Mon_URL + "/pharmacie/").then((res) => {
+      let data = res.data;
+      setPharmacieList(data);
+      console.log(pharmacieList, "pharmacie ====>");
+    });
+  };
 
   const saveButton = () => {
     fetch(Mon_URL + "/user/register", {
@@ -79,15 +84,19 @@ export default Signup = ({ navigation }) => {
     setadress(null);
     setrole(null);
   };
+  useEffect(() => {
+    getpharmacieList();
+    console.log(pharmacieList, "RNPickerSelect");
+  }, []);
 
   return (
-          <ImageBackground
-            source={require("../assets/img/B13.png")}
-            style={styles.ImageB}
-          >
-    <NativeBaseProvider>
-      <ScrollView>
-        <View style={styles.container}>
+    <ImageBackground
+      source={require("../assets/img/B13.png")}
+      style={styles.ImageB}
+    >
+      <NativeBaseProvider>
+        <ScrollView>
+          <View style={styles.container}>
             <View style={styles.Middle}>
               <Text style={styles.BiText}>PHARMA</Text>
               <Text style={styles.Bi1Text}>mobile</Text>
@@ -268,7 +277,7 @@ export default Signup = ({ navigation }) => {
             {/* Role */}
 
             <View style={styles.buttonStyleX}>
-              <View style={styles.picker}>
+              <View style={styles.emailInput}>
                 <RNPickerSelect
                   onValueChange={(value) => setrole(value)}
                   placeholder={{
@@ -284,9 +293,27 @@ export default Signup = ({ navigation }) => {
                   ]}
                 />
               </View>
-            </View>
+              {role == "Pharmacien" && (
+                <View style={styles.emailInput}>
+                  <RNPickerSelect
+                    onValueChange={(value) => setPharmaciename(value)}
+                    placeholder={{
+                      label: "Select your pharmacie",
+                      value: null,
+                    }}
+                    _light={{
+                      placeholderTextColor: "blueGray.400",
+                    }}
+                    items={pharmacieList.map((el) => ({
+                      label: el.username,
+                      value: el.username,
+                    }))}
+                  />
+                </View>
+              )}
 
-            {/*Button Enregistrer*/}
+              {/*Button Enregistrer*/}
+            </View>
             <View style={styles.buttonStyle}>
               <TouchableHighlight onPress={saveButton}>
                 <Button style={styles.buttonDesign}> S'INSCRIRE</Button>
@@ -301,10 +328,10 @@ export default Signup = ({ navigation }) => {
                 <Text style={styles.logText}> SE CONNECTER</Text>
               </TouchableOpacity>
             </View>
-        </View>
-      </ScrollView>
-    </NativeBaseProvider>
-          </ImageBackground>
+          </View>
+        </ScrollView>
+      </NativeBaseProvider>
+    </ImageBackground>
   );
 };
 
@@ -357,6 +384,7 @@ const styles = StyleSheet.create({
   },
 
   Bi2Text: {
+    alignItems: "center",
     paddingTop: 20,
     fontFamily: "monospace",
     fontSize: 14,

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { NativeBaseProvider, Image } from "native-base";
+import { NativeBaseProvider, Image, Button } from "native-base";
 
 import "localstorage-polyfill";
 
@@ -62,18 +62,32 @@ function DetailProduit({ navigation, route }) {
                 </Text>
                 <View></View>
               </View>
-              <View>
-                <Text style={{ marginTop: "10%", fontSize: 20 }}>
+              <View style={styles.Button}>
+                <Text style={{ marginLeft:"10%", marginTop: "10%", fontSize: 20 }}>
                   Trouver votre medicaments ici :
                 </Text>
-                <TouchableOpacity style={styles.Button}>
-                  <Text style={styles.text}>Pharmacie</Text>
+                <TouchableOpacity >
+                  <Button
+                    style={styles.buttonDesign2}
+                    onPress={() => navigation.navigate("Pharmacie")}
+                  >
+                    Localisation
+                  </Button>
                 </TouchableOpacity>
               </View>
             </View>
           ) : (
             <View style={{ alignItems: "center" }}>
-              <Image style={styles.ImageX} source={{ uri: Detail.photo }} />
+              <Image
+                source={{ uri: Detail.photo }}
+                style={{
+                  height: 450,
+                  width: 460,
+                  border: "1px solid",
+                  borderRadius: 35,
+                  backgroundColor: "white",
+                }}
+              />
               <View
                 style={{
                   display: "flex",
@@ -102,7 +116,6 @@ function DetailProduit({ navigation, route }) {
                   />
                 </View>
               </View>
-
               <Text style={styles.title}>nom : {Detail && Detail.nom}</Text>
             </View>
           )}
@@ -121,19 +134,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   Button: {
-    display: "flex",
-    alignItems: "center",
-    paddingVertical: 2,
-    backgroundColor: "#ACDA4E",
-    borderRadius: 10,
-    elevation: 2,
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
+    marginTop: "10%",
+    marginBottom: 50,
+    marginRight: 20,
+    paddingLeft: 40,
+    width: "90%",
+    elevation: 10,
   },
   ImageB: {
     width: "100%",
@@ -172,5 +178,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontStyle: "italic",
     color: "black",
+  },
+  buttonDesign2: {
+    height: 50,
+    backgroundColor: "#2DA539",
+    fontWeight: "bold",
   },
 });

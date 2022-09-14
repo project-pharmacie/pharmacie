@@ -82,7 +82,7 @@ function Localisation(props) {
     pinColor="green"
     coordinate={{
       latitude: 35.76863811770605,
-    longitude: 10.835799034684896,
+      longitude: 10.835799034684896,
     }}
     title={"Pharmacie zakya Hajjar"}
     description={"Pharmacie de jour"}
