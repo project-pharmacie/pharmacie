@@ -24,7 +24,6 @@ import "localstorage-polyfill";
 const Mon_URL = "http://192.168.1.100:4000";
 
 function Acceuil(props) {
-
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const [username, setusername] = useState("user");
@@ -40,7 +39,6 @@ function Acceuil(props) {
     }
   };
 
-
   useEffect(() => {
     getData();
   }, []);
@@ -50,11 +48,9 @@ function Acceuil(props) {
   // }
 
   return (
+    <NativeBaseProvider>
     <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/img/B13.png")}
-      
-      >
+      <ImageBackground source={require("../assets/img/B13.png")}>
         <View style={styles.ImageX}>
           <Image
             style={styles.ImageX1}
@@ -67,12 +63,6 @@ function Acceuil(props) {
           <Text style={styles.BiText}>Bonjour,{username}! </Text>
           <Text style={styles.Bi1Text}>Que chercher vous ?</Text>
         </View>
-
-        {/* <Searchbar
-          onChangeText={(text) => console.log(text)}
-          updateSearch={updateSearch}
-          style={{ marginTop: "8%" }}
-        /> */}
 
         {/*Buttons Pharmacie - produits - Localisation */}
 
@@ -111,22 +101,24 @@ function Acceuil(props) {
         </View>
       </ImageBackground>
     </View>
-  );
-}
-export default () => {
-  return (
-    <NativeBaseProvider>
-      <Acceuil />
     </NativeBaseProvider>
   );
-};
+}
+
+// export default () => {
+  //   return (
+    //     <NativeBaseProvider>
+    //       <Acceuil />
+    //     </NativeBaseProvider>
+//   );
+// };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: "100%",
     width: "100%",
   },
-
+  
   BiText: {
     fontFamily: "monospace",
     color: "#344372",
@@ -141,19 +133,19 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     paddingBottom: 20,
   },
-
+  
   textbu: {
     fontSize: 21,
     color: "white",
   },
-
+  
   ImageX1: {
     marginTop: 20,
     marginRight: 5,
     width: "60%",
     height: 170,
   },
-
+  
   ImageX: {
     marginTop: 10,
     marginRight: 5,
@@ -165,16 +157,18 @@ const styles = StyleSheet.create({
   },
 
   button12: {
+    display: "flex",
     flexDirection: "row",
+    alignItems: "center",
   },
-
+  
   buttonDesign: {
     backgroundColor: "#28B463",
     alignItems: "center",
     paddingTop: 55,
     borderRadius: 10,
   },
-
+  
   button1: {
     backgroundColor: "#28B463",
     marginTop: 20,
@@ -192,16 +186,18 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     borderRadius: 10,
   },
-
+  
   button3: {
     paddingTop: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: '5%',
+    paddingRight: '8%',
   },
-
+  
   buttonDesign3: {
     backgroundColor: "#28B463",
     alignItems: "center",
     borderRadius: 8,
   },
 });
+
+export default Acceuil
