@@ -63,6 +63,7 @@ const Login = ({ navigation }) => {
       });
     setUsername(null);
     setPassword(null);
+    setError("");
   };
 
   return (
@@ -161,7 +162,9 @@ const Login = ({ navigation }) => {
             <TouchableHighlight onPress={saveButton}>
               <View>
                 <Button style={styles.buttonDesign}> CONNEXION</Button>
-                <Text style={styles.error}>{error}</Text>
+                {error.length > 4 ? (
+                  <Text style={styles.error}>{error}</Text>
+                ) : null}
               </View>
             </TouchableHighlight>
           </View>

@@ -156,9 +156,6 @@ const styles = StyleSheet.create({
   lineStyle: {
     flexDirection: "row",
     marginBottom: 20,
-    // marginTop:80,
-    // marginLeft:15,
-    // marginRight:15,
     alignItems: "center",
   },
 });

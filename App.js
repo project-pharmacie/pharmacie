@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
 import DrawerContent from "./Drawer/DrawerContent";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import AboutNavigation from "./Navigation/GlobalNavigation";
@@ -9,21 +9,20 @@ import GlobalNavigation from "./Navigation/GlobalNavigation";
 const Drawer = createDrawerNavigator();
 function App() {
   const [logged, setLogged] = useState(false);
+  // console.log("Aa", Drawer.Navigator);
   return (
-    // <NativeBaseProvider>
-      
 
-      <Drawer.Navigator
-        screenOption={{ headerShow: false }}
-        drawerContent={(props) => <DrawerContent {...props} />}
-      >
-        <Drawer.Screen name="Menu" component={AboutNavigation} />
-      </Drawer.Navigator>
-     
-    // </NativeBaseProvider>
-  
-)}
+    <Drawer.Navigator
+      screenOption={{ headerShow: false }}
+      drawerContent={(props) => <DrawerContent {...props} />}
+    >
+      <Drawer.Screen name="Menu" component={AboutNavigation} />
+    </Drawer.Navigator>
 
+  );
+}
+// export default  App ;
+// export default App;
 export default () => {
   return (
     <NavigationContainer>
