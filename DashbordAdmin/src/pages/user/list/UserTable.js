@@ -27,7 +27,7 @@ const UserTable = () => {
 
       setusers(data);
     });
-  }, [setLoading]);
+  }, [loading]);
   const updateState = (t) => {
     setTest(t);
   };
@@ -103,23 +103,8 @@ const UserTable = () => {
 
               <th className="th-sm">Action</th>
             </tr>
+            <Loading />
           </thead>
-          <td>
-            <button
-              onClick={() => updateState(el)}
-              className="btn btn-info btn-sm mr-1"
-            >
-              <i className="fa fa-pencil"></i>
-            </button>
-            <button
-              onClick={(e) => {
-                handleDelete(el.id);
-              }}
-              className="btn btn-danger btn-sm mr-1"
-            >
-              <i className="fa fa-trash"></i>
-            </button>{" "}
-          </td>
         </table>
       ) : (
         <table
@@ -147,7 +132,7 @@ const UserTable = () => {
               <tr key={"User_" + el.id}>
                 <td>{el.id}</td>
 
-                {test === el.id ? (
+                {test.id === el.id ? (
                   <td>
                     <input
                       type="text"
@@ -160,7 +145,7 @@ const UserTable = () => {
                   <td>{el.username}</td>
                 )}
 
-                {test === el.id ? (
+                {test.id === el.id ? (
                   <td>
                     <input
                       type="text"
@@ -202,7 +187,6 @@ const UserTable = () => {
                 <td>
                   {test.id === el.id ? (
                     <td>
-                      {" "}
                       <button
                         onClick={(e) => handleUpdate(el.id)}
                         className="btn btn-info btn-sm mr-1"
