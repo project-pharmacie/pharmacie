@@ -25,7 +25,7 @@ import {
 import { TouchableHighlight } from "react-native-gesture-handler";
 import RNPickerSelect from "react-native-picker-select";
 import axios from "axios";
-const Mon_URL = "http://192.168.1.100:4000";
+const Mon_URL = "http://192.168.1.177:4000";
 
 export default Signup = ({ navigation }) => {
   const [id, setid] = useState(String);

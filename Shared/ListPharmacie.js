@@ -115,31 +115,32 @@ const ListPharmacie = ({ searchPhrase, setClicked, data, navigation }) => {
 export default ListPharmacie;
 const styles = StyleSheet.create({
   list__container: {
-    margin: 10,
+    margin: 1,
     height: "45%",
     width: "85%",
   },
   photo: {
-    width: 40,
-    height: 40,
-    borderRadius: 100,
+    width: 60,
+    height: 60,
+    borderRadius: 15,
   },
   item: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f1f3f6",
-    paddingVertical: 10,
-    paddingHorizontal: "7%",
+    paddingVertical: "3%",
+    paddingHorizontal: "3%",
     marginVertical: 4,
-    borderRadius: 4,
+    borderRadius: 20,
     borderBottomColor: "lightgrey",
   },
   title: {
     marginLeft: "5%",
-    fontSize: 20,
+    fontSize: 17,
     marginBottom: 5,
     fontStyle: "italic",
     alignItems: "center",
+    color: "#344372",
   },
 });

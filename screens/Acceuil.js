@@ -21,7 +21,7 @@ import "localstorage-polyfill";
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Mon_URL = "http://192.168.1.100:4000";
+const Mon_URL = "http://192.168.1.177:4000";
 
 function Acceuil(props) {
   const navigation = useNavigation();
@@ -32,7 +32,7 @@ function Acceuil(props) {
   const getData = async () => {
     console.log("hello world");
     const items = JSON.parse(localStorage.getItem("username"));
-    console.log("doyou ", items);
+    console.log("doyou ", props);
     if (items) {
       console.log("im her", items);
       setusername(items);

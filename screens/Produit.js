@@ -6,7 +6,7 @@ import List from "../Shared/List";
 import SearchBar from "../Shared/SearchBar";
 import { NativeBaseProvider, Image } from "native-base";
 
-const Mon_URL = "http://192.168.1.100:4000";
+const Mon_URL = "http://192.168.1.177:4000";
 
 function Produit({ navigation }) {
   const [value, setValue] = useState(null);
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 20,
-    color: "#101010",
+    color: "#344372",
     marginTop: 60,
     fontWeight: "700",
   },
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderWidth: 2,
     width: "90%",
-    borderRadius: 15,
+    borderRadius: 25,
   },
 
   listItemText: {

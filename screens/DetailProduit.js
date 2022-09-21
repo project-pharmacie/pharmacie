@@ -8,7 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { NativeBaseProvider, Image, Button } from "native-base";
-
+import axios from "axios";
 import "localstorage-polyfill";
 
 function DetailProduit({ navigation, route }) {
@@ -17,19 +17,28 @@ function DetailProduit({ navigation, route }) {
   const Detail = route.params.data;
   const [Role, setRole] = useState(true);
   //geting the Role of user and get the seleckted element Detail
-  const [detail, setDetail] = useState(null);
+  const [detail, setDetail] = useState([]);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const DisponiblitéDarticle = () => {
     Detail.etat === "Disponible" ? setIsEnabled(true) : setIsEnabled(false);
   };
+  const UpdateDisponiblité = (id) => {
+    toggleSwitch();
+    isEnabled
+      ? setDetail()
+      : axios.put(Mon_URL + `/user/${id}`).then((response) => {
+          console.log("response===========>", response);
+        });
+  };
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("etat"));
     console.log(detail, "detail");
     setDetail(detail);
     data === "Pharmacien" ? setRole(false) : setRole(!false);
-    console.log(Detail.photo, "photo");
+    console.log(Detail.id);
     DisponiblitéDarticle();
-  }, []);
+  }, [UpdateDisponiblité]);
   return (
     <NativeBaseProvider>
       <ImageBackground
@@ -43,30 +52,44 @@ function DetailProduit({ navigation, route }) {
                 <Image
                   source={{ uri: Detail.photo }}
                   style={{
-                    height: 450,
-                    width: 460,
+                    height: 300,
+                    width: 300,
                     border: "1px solid",
-                    borderRadius: 35,
+                    borderRadius: 400,
                     backgroundColor: "white",
                   }}
                 />
               </View>
-              <View style={{ marginTop: "2%" }}>
+              <View style={{ marginTop: "10%" }}>
                 <Text style={styles.title}>
-                  Nom du produit : {Detail && Detail.nom}
+                  Nom du produit:
+                  <Text style={{ fontSize: 15, color: "black" }}>
+                    {" " + Detail.nom}
+                  </Text>
                 </Text>
               </View>
-              <View>
+              <View style={{ alignItems: "center" }}>
                 <Text style={styles.title}>
-                  Etat de la disponibilité : {Detail && Detail.etat}
+                  Disponibilité:
+                  <Text style={{ fontSize: 15, color: "black" }}>
+                    {" " + Detail.etat}
+                  </Text>
                 </Text>
                 <View></View>
               </View>
               <View style={styles.Button}>
-                <Text style={{ marginLeft:"10%", marginTop: "10%", fontSize: 20 }}>
-                  Trouver votre medicaments ici :
+                <Text
+                  style={{
+                    marginLeft: "10%",
+                    marginTop: "32%",
+                    marginBottom: "5%",
+                    fontSize: 18,
+                    color: "#344372",
+                  }}
+                >
+                  Localiser votre pharmacie
                 </Text>
-                <TouchableOpacity >
+                <TouchableOpacity>
                   <Button
                     style={styles.buttonDesign2}
                     onPress={() => navigation.navigate("Pharmacie")}
@@ -77,17 +100,18 @@ function DetailProduit({ navigation, route }) {
               </View>
             </View>
           ) : (
-            <View style={{ alignItems: "center" }}>
+            <View style={styles.ImageX}>
               <Image
                 source={{ uri: Detail.photo }}
                 style={{
-                  height: 450,
-                  width: 460,
+                  height: 300,
+                  width: 300,
                   border: "1px solid",
-                  borderRadius: 35,
+                  borderRadius: 400,
                   backgroundColor: "white",
                 }}
               />
+              <Text style={styles.title1}>Nom du produit:{Detail.nom}</Text>
               <View
                 style={{
                   display: "flex",
@@ -97,13 +121,17 @@ function DetailProduit({ navigation, route }) {
                 }}
               >
                 <View>
-                  {isEnabled ? (
+                  {isEnabled && Detail.etat === "Disponible" ? (
                     <Text style={styles.title}>
-                      etat : {Detail && Detail.etat + "  "}
+                      Disponibilité:
+                      <Text style={{ fontSize: 15, color: "#2DA539" }}>
+                        Disponible
+                      </Text>
                     </Text>
                   ) : (
-                    <Text style={{ color: "red", fontSize: 24 }}>
-                      <Text style={styles.title}> etat : </Text>indisponible
+                    <Text style={{ color: "red", fontSize: 15 }}>
+                      <Text style={styles.title}> Disponibilité: </Text>
+                      Indisponible
                     </Text>
                   )}
                 </View>
@@ -111,12 +139,11 @@ function DetailProduit({ navigation, route }) {
                   <Switch
                     rackColor={{ false: "#767577", true: "#81b0ff" }}
                     thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-                    onValueChange={() => toggleSwitch()}
+                    onValueChange={() => UpdateDisponiblité(Detail.id)}
                     value={isEnabled}
                   />
                 </View>
               </View>
-              <Text style={styles.title}>nom : {Detail && Detail.nom}</Text>
             </View>
           )}
         </View>
@@ -133,8 +160,13 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  title1: {
+    marginTop: "15%",
+    fontSize: 20,
+    fontFamily: "monospace",
+    color: "#344372",
+  },
   Button: {
-    marginTop: "10%",
     marginBottom: 50,
     marginRight: 20,
     paddingLeft: 40,
@@ -148,7 +180,7 @@ const styles = StyleSheet.create({
 
   ImageX: {
     //height:'10%',
-    marginTop: "2%",
+    marginTop: "10%",
     alignItems: "center",
   },
   BiText: {
@@ -175,9 +207,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    marginBottom: 5,
-    fontStyle: "italic",
-    color: "black",
+    fontFamily: "monospace",
+    color: "#344372",
   },
   buttonDesign2: {
     height: 50,

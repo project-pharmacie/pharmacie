@@ -11,32 +11,29 @@ const UserTable = () => {
   const [changeData, setChangeData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
-
-  const [View, SetView] = useState(Boolean);
-
   const [test, setTest] = useState({
     id: "",
-
     username: "",
-
     email: "",
-
     adress: "",
-
     role: "",
   });
 
-  // const upUSer ()
+  useEffect(() => {
+    axios.get(Mon_URL + "/user/").then((res) => {
+      let data = res.data;
 
-  //Update
+      console.log("res.data", data);
 
+      setusers(data);
+    });
+  }, [setLoading]);
   const updateState = (t) => {
     setTest(t);
   };
 
   const handleUpdate = (id) => {
     setLoading(true);
-    console.log("===>testBeforeSendData", test);
     axios.put(Mon_URL + `/user/${id}`, test).then((response) => {
       console.log("response", response);
       setTest({});
@@ -47,16 +44,14 @@ const UserTable = () => {
   };
 
   const handleChange = (e) => {
-    console.log("current", e.currentTarget);
     const { value, name } = e.target;
-    console.log("======>", { [name]: value });
-
     setTest({ ...test, [name]: value });
   };
 
   //delete
 
   const handleDelete = (id) => {
+    setLoading(true);
     swal({
       title: "Etes-vous sur?",
 
@@ -68,15 +63,14 @@ const UserTable = () => {
 
       dangerMode: true,
     }).then((willDelete) => {
+      setLoading(false);
       if (willDelete) {
+        setLoading(false);
         axios
-
           .delete(Mon_URL + `/user/${id}`)
-
           .then(({ data }) => {
-            console.log(data);
+            console.log("data delete", data);
           })
-
           .catch((err) => console.log(err));
 
         swal("Supprimer!", "le client est supprimé!", "success");
@@ -86,22 +80,47 @@ const UserTable = () => {
 
   // Affichage de la liste
 
-  useEffect(() => {
-    axios.get(Mon_URL + "/user/").then((res) => {
-      let data = res.data;
-
-      console.log(data);
-
-      setusers(data);
-    });
-  }, [changeData]);
-
   const data = users;
 
   return (
     <>
       {loading ? (
-        <Loading />
+        <table
+          id="dtBasicExample"
+          className="table table-striped table-bordered table-sm"
+        >
+          <thead>
+            <tr>
+              <th className="th-sm">Id</th>
+
+              <th className="th-sm">Nom</th>
+
+              <th className="th-sm">Email</th>
+
+              <th className="th-sm">Adresse</th>
+
+              <th className="th-sm">Role</th>
+
+              <th className="th-sm">Action</th>
+            </tr>
+          </thead>
+          <td>
+            <button
+              onClick={() => updateState(el)}
+              className="btn btn-info btn-sm mr-1"
+            >
+              <i className="fa fa-pencil"></i>
+            </button>
+            <button
+              onClick={(e) => {
+                handleDelete(el.id);
+              }}
+              className="btn btn-danger btn-sm mr-1"
+            >
+              <i className="fa fa-trash"></i>
+            </button>{" "}
+          </td>
+        </table>
       ) : (
         <table
           id="dtBasicExample"

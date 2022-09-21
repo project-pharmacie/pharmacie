@@ -8,26 +8,25 @@ import GlobalNavigation from "./Navigation/GlobalNavigation";
 
 const Drawer = createDrawerNavigator();
 function App() {
-  const [logged, setLogged] = useState(false);
   // console.log("Aa", Drawer.Navigator);
   return (
-
     <Drawer.Navigator
       screenOption={{ headerShow: false }}
       drawerContent={(props) => <DrawerContent {...props} />}
     >
       <Drawer.Screen name="Menu" component={AboutNavigation} />
     </Drawer.Navigator>
-
   );
 }
 // export default  App ;
 // export default App;
 export default () => {
+  const [logged, setLogged] = useState(true);
+
   return (
     <NavigationContainer>
-    {/* // <GlobalNavigation /> */}
-      <App />
-     </NavigationContainer>
+      {/* // <GlobalNavigation /> */}
+      {logged ? <App /> : null}
+    </NavigationContainer>
   );
 };
