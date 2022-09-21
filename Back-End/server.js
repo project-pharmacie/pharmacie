@@ -14,7 +14,8 @@ app.use(cors());
 app.use('/user', require('./src/routes/user.route'));
 app.use('/pharmacie', require('./src/routes/pharmacie.route'));
 app.use('/produit', require('./src/routes/produit.route'));
-app.use('/admin', require('./src/routes/admin.route'))
+app.use('/admin', require('./src/routes/admin.route'));
+
 
 // global error handler
 app.use(errorHandler);

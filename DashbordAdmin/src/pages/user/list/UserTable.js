@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../../components/Loading";
-import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "axios";
 
@@ -11,6 +10,9 @@ const UserTable = () => {
   const [changeData, setChangeData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const data = users;
+
+
   const [test, setTest] = useState({
     id: "",
     username: "",
@@ -19,23 +21,14 @@ const UserTable = () => {
     role: "",
   });
 
-  useEffect(() => {
-    axios.get(Mon_URL + "/user/").then((res) => {
-      let data = res.data;
 
-      console.log("res.data", data);
-
-      setusers(data);
-    });
-  }, [loading]);
+//Update
   const updateState = (t) => {
     setTest(t);
   };
-
   const handleUpdate = (id) => {
     setLoading(true);
     axios.put(Mon_URL + `/user/${id}`, test).then((response) => {
-      console.log("response", response);
       setTest({});
       setChangeData(!changeData);
       setLoading(false);
@@ -48,8 +41,8 @@ const UserTable = () => {
     setTest({ ...test, [name]: value });
   };
 
-  //delete
 
+ //delete
   const handleDelete = (id) => {
     setLoading(true);
     swal({
@@ -78,9 +71,19 @@ const UserTable = () => {
     });
   };
 
-  // Affichage de la liste
 
-  const data = users;
+// Affichage de la liste
+
+  useEffect(() => {
+    axios.get(Mon_URL + "/user/").then((res) => {
+      let data = res.data;
+
+      console.log(data);
+
+      setusers(data);
+    });
+  }, [loading]);
+
 
   return (
     <>
@@ -105,6 +108,7 @@ const UserTable = () => {
             </tr>
             <Loading />
           </thead>
+          
         </table>
       ) : (
         <table
