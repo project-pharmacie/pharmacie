@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../../components/Loading";
-import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "axios";
 
-const Mon_URL = "http://192.168.1.177:4000";
+const Mon_URL = "http://192.168.1.41:4000";
 
 const UserTable = () => {
   const [users, setusers] = useState([]);
   const [changeData, setChangeData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const data = users;
+
+
   const [test, setTest] = useState({
     id: "",
     username: "",
@@ -19,23 +21,14 @@ const UserTable = () => {
     role: "",
   });
 
-  useEffect(() => {
-    axios.get(Mon_URL + "/user/").then((res) => {
-      let data = res.data;
 
-      console.log("res.data", data);
-
-      setusers(data);
-    });
-  }, [setLoading]);
+//Update
   const updateState = (t) => {
     setTest(t);
   };
-
   const handleUpdate = (id) => {
     setLoading(true);
     axios.put(Mon_URL + `/user/${id}`, test).then((response) => {
-      console.log("response", response);
       setTest({});
       setChangeData(!changeData);
       setLoading(false);
@@ -48,8 +41,8 @@ const UserTable = () => {
     setTest({ ...test, [name]: value });
   };
 
-  //delete
 
+ //delete
   const handleDelete = (id) => {
     setLoading(true);
     swal({
@@ -78,9 +71,19 @@ const UserTable = () => {
     });
   };
 
-  // Affichage de la liste
 
-  const data = users;
+// Affichage de la liste
+
+  useEffect(() => {
+    axios.get(Mon_URL + "/user/").then((res) => {
+      let data = res.data;
+
+      console.log(data);
+
+      setusers(data);
+    });
+  }, [loading]);
+
 
   return (
     <>
@@ -104,22 +107,7 @@ const UserTable = () => {
               <th className="th-sm">Action</th>
             </tr>
           </thead>
-          <td>
-            <button
-              onClick={() => updateState(el)}
-              className="btn btn-info btn-sm mr-1"
-            >
-              <i className="fa fa-pencil"></i>
-            </button>
-            <button
-              onClick={(e) => {
-                handleDelete(el.id);
-              }}
-              className="btn btn-danger btn-sm mr-1"
-            >
-              <i className="fa fa-trash"></i>
-            </button>{" "}
-          </td>
+          
         </table>
       ) : (
         <table
@@ -147,7 +135,7 @@ const UserTable = () => {
               <tr key={"User_" + el.id}>
                 <td>{el.id}</td>
 
-                {test === el.id ? (
+                {test.id === el.id ? (
                   <td>
                     <input
                       type="text"
@@ -160,7 +148,7 @@ const UserTable = () => {
                   <td>{el.username}</td>
                 )}
 
-                {test === el.id ? (
+                {test.id === el.id ? (
                   <td>
                     <input
                       type="text"

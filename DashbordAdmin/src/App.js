@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './styles/Style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Routes, Route } from "react-router-dom";
@@ -34,5 +33,4 @@ class App extends Component {
     )
   }
 }
- 
 export default App;

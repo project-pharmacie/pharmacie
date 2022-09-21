@@ -30,7 +30,7 @@ const PharmacieFrom =() => {
         localisation: data.localisation,
         };
 
-        axios.post(`http://192.168.1.177:4000/pharmacie/register`,pharmacie)
+        axios.post(`http://192.168.1.41:4000/pharmacie/register`,pharmacie)
         .then((response) =>
          { 
            if (response.statusText)

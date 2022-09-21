@@ -23,7 +23,7 @@ const [produit, setproduit] = useState([]);
       setproduit(data);
     });
     //deleteCard()
-  },);
+  },[]);
 
   const handleDelete = (id) => {
     swal({

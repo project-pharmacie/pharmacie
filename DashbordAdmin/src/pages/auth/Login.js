@@ -20,7 +20,7 @@ export default class Login extends React.Component {
     });
   }
   handleSubmit(event) {
-    const MON_URL = "http://192.168.1.177:4000";
+    const MON_URL = "http://192.168.1.41:4000";
 
     event.preventDefault();
 

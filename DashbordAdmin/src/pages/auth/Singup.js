@@ -22,7 +22,8 @@ const Singup = (props) => {
       password: data.password,
     };
 
-    axios.post(`http://192.168.1.177:4000/admin/register`, user)
+    axios
+      .post(`http://192.168.1.41:4000/admin/register`, user)
       .then((response) => {
         console.log('zzzzzzzzzzzzzzz',response);
 

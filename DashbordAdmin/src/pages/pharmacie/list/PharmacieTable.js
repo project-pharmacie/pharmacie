@@ -19,7 +19,7 @@ const [pharmacie, setpharmacie] = useState([]);
       setpharmacie(data);
     });
   
-  },);
+  },[]);
 
   const handleDelete = (id) => {
     swal({
