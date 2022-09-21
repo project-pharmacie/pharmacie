@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Select from 'react-select'
+import React, { useState } from "react";
+import axios from "axios";
+import Select from "react-select";
 
 const UserForm = () => {
   const [data, setData] = useState({
@@ -12,12 +12,11 @@ const UserForm = () => {
   });
 
   const options = [
-       { value: 'Pharmacien', label: 'Pharmacien' },
-       { value: 'Patient', label: 'Patient' },
-    
+    { value: "Pharmacien", label: "Pharmacien" },
+    { value: "Patient", label: "Patient" },
   ];
   const [selectedOption, setSelectedOption] = useState(null);
-  
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -34,7 +33,7 @@ const UserForm = () => {
       role: selectedOption.value,
     };
     axios
-      .post(`http://192.168.1.41:4000/user/register`, user)
+      .post(`http://192.168.1.177:4000/user/register`, user)
       .then((response) => {
         if (response.statusText) {
           alert(response.data.message);
@@ -111,17 +110,17 @@ const UserForm = () => {
                 />
               </div>
 
-                <div className="form-group">
-                  <label htmlFor="name">Role</label>
-                  <Select 
+              <div className="form-group">
+                <label htmlFor="name">Role</label>
+                <Select
                   options={options}
                   onChange={setSelectedOption}
-                  defaultValue={selectedOption}  
+                  defaultValue={selectedOption}
                   placeholder="Choisir votre Statut"
-                  />
-                </div>
+                />
               </div>
             </div>
+          </div>
 
           <button className="btn btn-success btn-sm form-control mb-3 btn_custom">
             Enregistrer
