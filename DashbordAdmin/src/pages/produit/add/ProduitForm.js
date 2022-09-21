@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-
-
-
+import Select from 'react-select'
 
 const ProduitForm =() => {
+
+    const options = [
+        { value: 'Disponible', label: 'Disponible' },
+        { value: 'Indisponible', label: 'Indisponible' },
+        
+      ];
+    const [selectedOption, setSelectedOption] = useState(null);
 
     const [data, setData] = useState({
         nom: "",
@@ -13,29 +17,24 @@ const ProduitForm =() => {
         photo:""
       });
 
-      //const navigate = useNavigate();
-
-      const handleChange = ({ currentTarget: input }) => {
+    const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
        
       };
-       const handleSubmit =(event)=>{
+    const handleSubmit =(event)=>{
                 event.preventDefault();
     
-            const produit = {
+         const produit = {
                 nom : data.nom,
-                etat : data.etat,
+                etat : selectedOption.value,
                 photo : data.photo
-    
                 };
-    
          axios.post(`http://192.168.1.41:4000/produit/register`,produit)
          .then((response) =>
           { 
             if (response.statusText)
             {
                 alert(response.data.message)
-                //navigate('/')   
             }
           })
          .catch((error) => alert("Produit Already exists"))
@@ -59,18 +58,17 @@ const ProduitForm =() => {
                                 </div>
                             </div>
 
-                            <div className="col-lg-4">
-                                <div className="form-group">
-                                    <label htmlFor="subject">Etat</label>
-                                    <input type="text"
-                                        className="form-control"
-                                        id="etat"
-                                        onChange={handleChange}
-                                        name="etat"
-                                        placeholder="Etat de disponibilité"
-                                    />
-                                </div>
+                        <div className="col-lg-4">
+                            <div className="form-group">
+                            <label htmlFor="name">Etat</label>
+                            <Select 
+                             options={options}
+                             onChange={setSelectedOption}
+                             defaultValue={selectedOption}  
+                             placeholder="Modifier la disponibilité du produit"
+                            />
                             </div>
+                         </div>
 
                             <div className="col-lg-4">
                                 <div className="form-group">

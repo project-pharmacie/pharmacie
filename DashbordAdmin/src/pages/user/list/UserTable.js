@@ -1,44 +1,34 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../../components/Loading";
-import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "axios";
 
-const Mon_URL = "http://192.168.1.177:4000";
+const Mon_URL = "http://192.168.1.41:4000";
 
 const UserTable = () => {
   const [users, setusers] = useState([]);
   const [changeData, setChangeData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const data = users;
 
-  const [View, SetView] = useState(Boolean);
 
   const [test, setTest] = useState({
     id: "",
-
     username: "",
-
     email: "",
-
     adress: "",
-
     role: "",
   });
 
-  // const upUSer ()
 
-  //Update
-
+//Update
   const updateState = (t) => {
     setTest(t);
   };
-
   const handleUpdate = (id) => {
     setLoading(true);
-    console.log("===>testBeforeSendData", test);
     axios.put(Mon_URL + `/user/${id}`, test).then((response) => {
-      console.log("response", response);
       setTest({});
       setChangeData(!changeData);
       setLoading(false);
@@ -54,8 +44,8 @@ const UserTable = () => {
     setTest({ ...test, [name]: value });
   };
 
-  //delete
 
+ //delete
   const handleDelete = (id) => {
     swal({
       title: "Etes-vous sur?",
@@ -70,7 +60,6 @@ const UserTable = () => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-
           .delete(Mon_URL + `/user/${id}`)
 
           .then(({ data }) => {
@@ -84,7 +73,8 @@ const UserTable = () => {
     });
   };
 
-  // Affichage de la liste
+
+// Affichage de la liste
 
   useEffect(() => {
     axios.get(Mon_URL + "/user/").then((res) => {
@@ -96,7 +86,6 @@ const UserTable = () => {
     });
   }, [changeData]);
 
-  const data = users;
 
   return (
     <>

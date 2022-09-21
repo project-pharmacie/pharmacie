@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import Select from 'react-select'
 
 const UserForm = () => {
   const [data, setData] = useState({
@@ -10,10 +11,18 @@ const UserForm = () => {
     role: "",
   });
 
+  const options = [
+       { value: 'Pharmacien', label: 'Pharmacien' },
+       { value: 'Patient', label: 'Patient' },
+    
+  ];
+  const [selectedOption, setSelectedOption] = useState(null);
+  
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  //Ajout Client
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -22,11 +31,10 @@ const UserForm = () => {
       email: data.email,
       password: data.password,
       adress: data.adress,
-      role: data.role,
+      role: selectedOption.value,
     };
-
     axios
-      .post(`http://192.168.1.177:4000/user/register`, user)
+      .post(`http://192.168.1.41:4000/user/register`, user)
       .then((response) => {
         if (response.statusText) {
           alert(response.data.message);
@@ -103,20 +111,18 @@ const UserForm = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="Role">Role</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="role"
-                  onChange={handleChange}
-                  name="role"
-                  placeholder="Saisir le role"
-                  required
-                />
+                <div className="form-group">
+                  <label htmlFor="name">Role</label>
+                  <Select 
+                  options={options}
+                  onChange={setSelectedOption}
+                  defaultValue={selectedOption}  
+                  placeholder="Choisir votre Statut"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+
           <button className="btn btn-success btn-sm form-control mb-3 btn_custom">
             Enregistrer
           </button>
