@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 
 const Singup = (props) => {
@@ -23,9 +22,10 @@ const Singup = (props) => {
       password: data.password,
     };
 
-    axios
-      .post(`http://192.168.1.177:4000/admin/register`, user)
+    axios.post(`http://192.168.1.177:4000/admin/register`, user)
       .then((response) => {
+        console.log('zzzzzzzzzzzzzzz',response);
+
         if (response.statusText) {
           alert(response.data.message);
           navigate("/");

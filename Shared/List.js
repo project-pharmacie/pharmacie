@@ -34,7 +34,6 @@ const Item = ({ nom, navigation, etat, photo }) => {
 
 // the filter
 const List = ({ searchPhrase, setClicked, data, navigation }) => {
-  
   const renderItem = ({ item }) => {
     // when no input, show all
     if (searchPhrase === "") {
@@ -105,8 +104,8 @@ const styles = StyleSheet.create({
     width: "85%",
   },
   photo: {
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 60,
     borderRadius: 100,
   },
   item: {
@@ -115,9 +114,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f1f3f6",
     paddingVertical: 10,
-    paddingHorizontal: "7%",
+    paddingHorizontal: "8%",
     marginVertical: 4,
-    borderRadius: 4,
+    borderRadius: 20,
     borderBottomColor: "lightgrey",
   },
   title: {
@@ -125,5 +124,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 5,
     fontStyle: "italic",
+    color: "#344372",
   },
 });
