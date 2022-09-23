@@ -50,6 +50,7 @@ function DetailProduit({ navigation, route }) {
             <View style={styles.container}>
               <View style={styles.ImageX}>
                 <Image
+                  alt="im01"
                   source={{ uri: Detail.photo }}
                   style={{
                     height: 300,
@@ -102,6 +103,7 @@ function DetailProduit({ navigation, route }) {
           ) : (
             <View style={styles.ImageX}>
               <Image
+                alt="im01"
                 source={{ uri: Detail.photo }}
                 style={{
                   height: 300,

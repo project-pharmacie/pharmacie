@@ -15,7 +15,7 @@ import "localstorage-polyfill";
 const Item = ({ nom, navigation, etat, photo }) => {
   return (
     <View style={styles.item}>
-      <Image source={{ uri: photo }} style={styles.photo} />
+      <Image   alt="im3" source={{ uri: photo }} style={styles.photo} />
 
       <Text
         style={styles.title}

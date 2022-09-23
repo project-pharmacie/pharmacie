@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-
+import swal from "sweetalert";
 
 
 const PharmacieFrom =() => {
@@ -11,7 +10,7 @@ const PharmacieFrom =() => {
         email: "",
         telephone: "",
         adress: "",
-        localisation: "",
+        photo: "",
       });
 
       const handleChange = ({ currentTarget: input }) => {
@@ -27,7 +26,7 @@ const PharmacieFrom =() => {
         email: data.email,
         telephone : data.telephone,
         adress: data.adress,
-        localisation: data.localisation,
+        photo: data.photo,
         };
 
         axios.post(`http://192.168.1.41:4000/pharmacie/register`,pharmacie)
@@ -35,14 +34,12 @@ const PharmacieFrom =() => {
          { 
            if (response.statusText)
            {
-               alert(response.data.message)    
+            swal("Ajouté!", "le Pharmacie est ajouté!", "success");
+            window.location.reload();
            }
          })
-   
-        .catch((error) => alert("Pharmacie Already exists"))
-       
+        .catch((error) => swal({title:"Pharmacie Already exists", icon: "warning"}))
        }
-
 
         return (
             <>
@@ -59,6 +56,7 @@ const PharmacieFrom =() => {
                                         onChange={handleChange}
                                         name="username"
                                         placeholder="Entrer le nom"
+                                        required
                                     />
                                     {/* <small className="text-danger">{this.state.name}</small> */}
                                 </div>
@@ -70,6 +68,7 @@ const PharmacieFrom =() => {
                                         onChange={handleChange}
                                         name="email"
                                         placeholder="Entrer l'email"
+                                        required
                                     />
                                     {/* <small className="text-danger">{this.state.start_date}</small> */}
                                 </div>
@@ -82,6 +81,7 @@ const PharmacieFrom =() => {
                                         onChange={handleChange}
                                         name="telephone"
                                         placeholder="Entrer le numero de telephone"
+                                        required
                                     />
                                     {/* <small className="text-danger">{this.state.start_date}</small> */}
                                 </div>
@@ -93,22 +93,22 @@ const PharmacieFrom =() => {
                                         onChange={handleChange}
                                         name="adress"
                                         placeholder="Entrer l'adresse"
+                                        required
                                     />
                                     {/* <small className="text-danger">{this.state.start_date}</small> */}
                                     </div>
                                 <div className="form-group">
-                                    <label htmlFor="localisation">Localisation</label>
+                                    <label htmlFor="Photo">Photo</label>
                                     <input type="text"
                                         className="form-control"
-                                        id="localisation"
+                                        id="photo"
                                         onChange={handleChange}
-                                        name="localisation"
-                                        placeholder="Entrer la localisation de la pharmacie"
-
+                                        name="photo"
+                                        placeholder="Ajoutez la photo de la pharmacie"
+                                        required
                                     />
                                     {/* <small className="text-danger">{this.state.end_date}</small> */}
-                                </div>
-                                
+                                </div>       
                             </div>
                           
                         </div>

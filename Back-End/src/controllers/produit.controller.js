@@ -45,7 +45,8 @@ function getByNom(req, res, next) {
 function updateSchema(req, res, next) {
   const schema = Joi.object({
     nom: Joi.string().empty(""),
-    etat: Joi.string().empty("")
+    etat: Joi.string().empty(""),
+    photo: Joi.string().empty("")
   });
   validateRequest(req, next, schema);
 }
