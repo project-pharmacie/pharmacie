@@ -15,7 +15,7 @@ import "localstorage-polyfill";
 const Item = ({ username, telephone, email, photo, navigation }) => {
   return (
     <View style={styles.item}>
-      <Image source={{ uri: photo }} style={styles.photo} />
+      <Image alt="img1" source={{ uri: photo }} style={styles.photo} />
 
       <Text
         style={styles.title}
@@ -42,7 +42,6 @@ const ListPharmacie = ({ searchPhrase, setClicked, data, navigation }) => {
   const renderItem = ({ item }) => {
     // when no input, show all
     if (searchPhrase === "") {
-      console.log("renderItemPHoto", item);
       return (
         <Item
           username={item.username}
@@ -92,11 +91,12 @@ const ListPharmacie = ({ searchPhrase, setClicked, data, navigation }) => {
 
   return (
     <SafeAreaView style={styles.list__container}>
+    
       <ImageBackground
         source={require("../assets/img/B13.png")}
         style={styles.container}
       >
-        <View
+        <View styles={{flex:1}}
           onStartShouldSetResponder={() => {
             setClicked(false);
           }}
@@ -112,7 +112,6 @@ const ListPharmacie = ({ searchPhrase, setClicked, data, navigation }) => {
   );
 };
 
-export default ListPharmacie;
 const styles = StyleSheet.create({
   list__container: {
     margin: 1,
@@ -125,7 +124,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   item: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f1f3f6",
@@ -144,3 +142,4 @@ const styles = StyleSheet.create({
     color: "#344372",
   },
 });
+export default ListPharmacie;

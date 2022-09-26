@@ -15,10 +15,10 @@ function DetailProduit({ navigation, route }) {
   const Mon_URL = "http://192.168.1.249:4000";
 
   var Detail = route.params.data;
-  const [data, setdata] = useState();
+  const [data, setdata] = useState(Detail);
   const [Role, setRole] = useState(true);
   // setDetail(Detail);
-  const [isEnabled, setIsEnabled] = useState(Boolean);
+  const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = (id) => {
     console.log("id=>", id);
 
@@ -37,22 +37,20 @@ function DetailProduit({ navigation, route }) {
           photo: Detail.photo,
         });
     console.log("p=>", data);
-    axios
-      .put(Mon_URL + `/produit/${id}`, data)
-      .then((response) => {
-        console.log("response ===========>", response);
-
-      })
-      .catch((error) => {
-        console.log(error, "::<<");
+    axios.put(Mon_URL + `/produit/${id}`, data).then((response) => {
+      console.log("response ===========>", response.config.data);
+      axios.get(Mon_URL + "/produit/" + data.nom).then((res) => {
+        setdata(res.data[0]);
+        console.log(res.data[0],"i'm trying");
       });
+    });
   };
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("etat"));
-    data === "Pharmacien" ? setRole(false) : setRole(!false);
-    console.log(Detail.id, "data.id");
-  }, []);
+    const Role = JSON.parse(localStorage.getItem("etat"));
+    Role === "Pharmacien" ? setRole(false) : setRole(!false);
+    console.log(data, "data.id");
+  }, [isEnabled]);
   return (
     <NativeBaseProvider>
       <ImageBackground
@@ -64,8 +62,8 @@ function DetailProduit({ navigation, route }) {
             <View style={styles.container}>
               <View style={styles.ImageX}>
                 <Image
-                  source={{ uri: Detail.photo }}
-                  alt="ph"
+                  alt="im01"
+                  source={{ uri: data.photo }}
                   style={{
                     height: 300,
                     width: 300,
@@ -79,7 +77,7 @@ function DetailProduit({ navigation, route }) {
                 <Text style={styles.title}>
                   Nom du produit:
                   <Text style={{ fontSize: 15, color: "black" }}>
-                    {" " + Detail.nom}
+                    {" " + data.nom}
                   </Text>
                 </Text>
               </View>
@@ -87,7 +85,7 @@ function DetailProduit({ navigation, route }) {
                 <Text style={styles.title}>
                   Disponibilité:
                   <Text style={{ fontSize: 15, color: "black" }}>
-                    {" " + Detail.etat}
+                    {" " + data.etat}
                   </Text>
                 </Text>
                 <View></View>
@@ -117,7 +115,8 @@ function DetailProduit({ navigation, route }) {
           ) : (
             <View style={styles.ImageX}>
               <Image
-                source={{ uri: Detail.photo }}
+                alt="im01"
+                source={{ uri: data.photo }}
                 style={{
                   height: 300,
                   width: 300,
@@ -125,9 +124,8 @@ function DetailProduit({ navigation, route }) {
                   borderRadius: 400,
                   backgroundColor: "white",
                 }}
-                alt="image"
               />
-              <Text style={styles.title1}>Nom du produit:{Detail.nom}</Text>
+              <Text style={styles.title1}>Nom du produit:{data.nom}</Text>
               <View
                 style={{
                   display: "flex",
@@ -137,17 +135,17 @@ function DetailProduit({ navigation, route }) {
                 }}
               >
                 <View>
-                  {isEnabled && Detail.etat === "Disponible" ? (
+                  {isEnabled && data.etat === "Disponible" ? (
                     <Text style={styles.title}>
                       Disponibilité:
                       <Text style={{ fontSize: 15, color: "#2DA539" }}>
-                        {Detail.etat}
+                        {data.etat}
                       </Text>
                     </Text>
                   ) : (
                     <Text style={{ color: "red", fontSize: 15 }}>
                       <Text style={styles.title}> Disponibilité: </Text>
-                      {Detail.etat}
+                      {data.etat}
                     </Text>
                   )}
                 </View>
@@ -157,7 +155,7 @@ function DetailProduit({ navigation, route }) {
                       trackColor={{ false: "#767577", true: "#81b0ff" }}
                       thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
                       ios_backgroundColor="#3e3e3e"
-                      onValueChange={() => toggleSwitch(Detail.id)}
+                      onValueChange={() => toggleSwitch(data.id)}
                       value={isEnabled}
                     />
                   </View>

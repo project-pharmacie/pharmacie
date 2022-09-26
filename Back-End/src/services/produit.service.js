@@ -38,17 +38,13 @@ async function update(id, params) {
     const produit = await getproduit(id);
 
     // validate
-    const nomChanged = params.nom && user.nom !== params.nom;
+    const nomChanged = params.nom && produit.nom !== params.nom;
     if (nomChanged && await db.produit.findOne({ where: { nom: params.nom } })) {
         throw 'nom "' + params.nom + '" is already taken';
     }
-
-   
     // copy params to produit and save
     Object.assign(produit, params);
     await produit.save();
-
-    return omitHash(produit.get());
 }
 
 async function _delete(id) {
@@ -67,7 +63,3 @@ async function getproduitNom(nom) {
     return produit;
 }
 
-function omitHash(produit) {
-    const { hash, ...userWithoutHash } = produit;
-    return produitWithoutHash;
-}

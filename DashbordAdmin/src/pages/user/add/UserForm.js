@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
-import Select from "react-select";
+
+import React, { useState } from 'react';
+import axios from 'axios';
+import Select from 'react-select'
+import swal from "sweetalert";
+
 
 const UserForm = () => {
   const [data, setData] = useState({
@@ -37,11 +40,11 @@ const UserForm = () => {
       .post(Mon_URL + `/user/register`, user)
       .then((response) => {
         if (response.statusText) {
-          alert(response.data.message);
+          swal("Ajouté!", "le Client est ajouté!", "success");
+          window.location.reload();
         }
       })
-
-      .catch((error) => alert("User Already exists"));
+      .catch((error) => swal({title:"Produit Already exists", icon: "warning"}));
   };
 
   return (
@@ -96,6 +99,7 @@ const UserForm = () => {
                   id="password"
                   name="password"
                   placeholder="Entrer le mot de passe"
+                  
                 />
               </div>
               <div className="form-group">
@@ -118,7 +122,11 @@ const UserForm = () => {
                   onChange={setSelectedOption}
                   defaultValue={selectedOption}
                   placeholder="Choisir votre Statut"
-                />
+
+                  required
+                  />
+                </div>
+
               </div>
             </div>
           </div>

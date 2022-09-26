@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Select from 'react-select'
+import swal from "sweetalert";
+import Excel from "../../ImportExcel"
 
 const ProduitForm =() => {
 
@@ -10,7 +12,6 @@ const ProduitForm =() => {
         
       ];
     const [selectedOption, setSelectedOption] = useState(null);
-
     const [data, setData] = useState({
         nom: "",
         etat: "",
@@ -18,12 +19,11 @@ const ProduitForm =() => {
       });
 
     const handleChange = ({ currentTarget: input }) => {
-        setData({ ...data, [input.name]: input.value });
-       
+        setData({ ...data, [input.name]: input.value });  
       };
+
     const handleSubmit =(event)=>{
-                event.preventDefault();
-    
+        event.preventDefault();
          const produit = {
                 nom : data.nom,
                 etat : selectedOption.value,
@@ -33,18 +33,21 @@ const ProduitForm =() => {
          .then((response) =>
           { 
             if (response.statusText)
-            {
-                alert(response.data.message)
+            { swal("Ajouté!", "le produit est ajouté!", "success");
+              window.location.reload();
             }
           })
-         .catch((error) => alert("Produit Already exists"))
+         .catch((error) => swal({title:"Produit Already exists", icon: "warning"}))
+
         }
     
 
         return (
             <>
+            
                 <div className="topic_form">
-                      <form onSubmit={handleSubmit}>                        <div className="row">
+                      <form onSubmit={handleSubmit}>        
+                        <div className="row">
                             <div className="col-lg-4">
                                 <div className="form-group">
                                     <label htmlFor="name">Nom</label>
@@ -54,6 +57,7 @@ const ProduitForm =() => {
                                         onChange={handleChange}
                                         name="nom"
                                         placeholder="Entrer le nom du produit"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -66,6 +70,7 @@ const ProduitForm =() => {
                              onChange={setSelectedOption}
                              defaultValue={selectedOption}  
                              placeholder="Modifier la disponibilité du produit"
+                             required
                             />
                             </div>
                          </div>
@@ -79,15 +84,21 @@ const ProduitForm =() => {
                                         onChange={handleChange}
                                         name="photo"
                                         placeholder="Ajoutez la photo du produit"
+                                        required
                                     />
                                 </div>
                             </div>
 
                         </div>
+                        <Excel/>
                         <button className="btn btn-success btn-sm form-control mb-3 btn_custom">Enregistrer</button>
                     </form>
                 </div>
+
+
             </>
+
+
         );
     }
 
