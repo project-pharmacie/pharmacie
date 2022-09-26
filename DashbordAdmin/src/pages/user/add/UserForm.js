@@ -20,6 +20,7 @@ const UserForm = () => {
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
+  const Mon_URL = "http://192.168.1.221:4000";
 
   //Ajout Client
   const handleSubmit = (event) => {
@@ -33,7 +34,7 @@ const UserForm = () => {
       role: selectedOption.value,
     };
     axios
-      .post(`http://192.168.1.177:4000/user/register`, user)
+      .post(Mon_URL + `/user/register`, user)
       .then((response) => {
         if (response.statusText) {
           alert(response.data.message);

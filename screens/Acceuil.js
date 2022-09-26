@@ -21,13 +21,11 @@ import "localstorage-polyfill";
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Mon_URL = "http://192.168.1.177:4000";
+const Mon_URL = "http://192.168.1.249:4000";
 
 function Acceuil(props) {
   const navigation = useNavigation();
-  const [value, setValue] = useState();
   const [username, setusername] = useState("user");
-  const [nickname, setNickname] = useState();
 
   const getData = async () => {
     console.log("hello world");
@@ -49,67 +47,67 @@ function Acceuil(props) {
 
   return (
     <NativeBaseProvider>
-    <View style={styles.container}>
-      <ImageBackground source={require("../assets/img/B13.png")}>
-        <View style={styles.ImageX}>
-          <Image
-            style={styles.ImageX1}
-            source={require("../assets/img/i66.png")}
-            alt=" ImagePharmacie"
-          />
-        </View>
+      <View style={styles.container}>
+        <ImageBackground source={require("../assets/img/B13.png")}>
+          <View style={styles.ImageX}>
+            <Image
+              style={styles.ImageX1}
+              source={require("../assets/img/i66.png")}
+              alt=" ImagePharmacie"
+            />
+          </View>
 
-        <View style={styles.Middle}>
-          <Text style={styles.BiText}>Bonjour,{username}! </Text>
-          <Text style={styles.Bi1Text}>Que chercher vous ?</Text>
-        </View>
+          <View style={styles.Middle}>
+            <Text style={styles.BiText}>Bonjour,{username}! </Text>
+            <Text style={styles.Bi1Text}>Que chercher vous ?</Text>
+          </View>
 
-        {/*Buttons Pharmacie - produits - Localisation */}
+          {/*Buttons Pharmacie - produits - Localisation */}
 
-        <View style={styles.button12}>
-          <View style={styles.button1}>
+          <View style={styles.button12}>
+            <View style={styles.button1}>
+              <TouchableHighlight>
+                <Button
+                  style={styles.buttonDesign}
+                  onPress={() => navigation.navigate("Pharmacie")}
+                >
+                  <Text style={styles.textbu}>Pharmacie</Text>{" "}
+                </Button>
+              </TouchableHighlight>
+            </View>
+
+            <View style={styles.button2}>
+              <TouchableHighlight>
+                <Button
+                  style={styles.buttonDesign}
+                  onPress={() => navigation.navigate("Produit")}
+                >
+                  <Text style={styles.textbu}> Produits</Text>
+                </Button>
+              </TouchableHighlight>
+            </View>
+          </View>
+          <View style={styles.button3}>
             <TouchableHighlight>
               <Button
-                style={styles.buttonDesign}
-                onPress={() => navigation.navigate("Pharmacie")}
+                style={styles.buttonDesign3}
+                onPress={() => navigation.navigate("Localisation")}
               >
-                <Text style={styles.textbu}>Pharmacie</Text>{" "}
+                <Text style={styles.textbu}> Localisation</Text>
               </Button>
             </TouchableHighlight>
           </View>
-
-          <View style={styles.button2}>
-            <TouchableHighlight>
-              <Button
-                style={styles.buttonDesign}
-                onPress={() => navigation.navigate("Produit")}
-              >
-                <Text style={styles.textbu}> Produits</Text>
-              </Button>
-            </TouchableHighlight>
-          </View>
-        </View>
-        <View style={styles.button3}>
-          <TouchableHighlight>
-            <Button
-              style={styles.buttonDesign3}
-              onPress={() => navigation.navigate("Localisation")}
-            >
-              <Text style={styles.textbu}> Localisation</Text>
-            </Button>
-          </TouchableHighlight>
-        </View>
-      </ImageBackground>
-    </View>
+        </ImageBackground>
+      </View>
     </NativeBaseProvider>
   );
 }
 
 // export default () => {
-  //   return (
-    //     <NativeBaseProvider>
-    //       <Acceuil />
-    //     </NativeBaseProvider>
+//   return (
+//     <NativeBaseProvider>
+//       <Acceuil />
+//     </NativeBaseProvider>
 //   );
 // };
 const styles = StyleSheet.create({
@@ -118,7 +116,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  
+
   BiText: {
     fontFamily: "monospace",
     color: "#344372",
@@ -133,19 +131,19 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     paddingBottom: 20,
   },
-  
+
   textbu: {
     fontSize: 21,
     color: "white",
   },
-  
+
   ImageX1: {
     marginTop: 20,
     marginRight: 5,
     width: "60%",
     height: 170,
   },
-  
+
   ImageX: {
     marginTop: 10,
     marginRight: 5,
@@ -161,14 +159,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  
+
   buttonDesign: {
     backgroundColor: "#28B463",
     alignItems: "center",
     paddingTop: 55,
     borderRadius: 10,
   },
-  
+
   button1: {
     backgroundColor: "#28B463",
     marginTop: 20,
@@ -186,13 +184,13 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     borderRadius: 10,
   },
-  
+
   button3: {
     paddingTop: 50,
-    paddingLeft: '5%',
-    paddingRight: '8%',
+    paddingLeft: "5%",
+    paddingRight: "8%",
   },
-  
+
   buttonDesign3: {
     backgroundColor: "#28B463",
     alignItems: "center",
@@ -200,4 +198,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Acceuil
+export default Acceuil;

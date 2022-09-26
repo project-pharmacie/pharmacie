@@ -7,6 +7,7 @@ const Singup = (props) => {
     username: "",
     password: "",
   });
+  const Mon_URL = "http://192.168.1.249:4000";
 
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const Singup = (props) => {
     };
 
     axios
-      .post(`http://192.168.1.41:4000/admin/register`, user)
+      .post(Mon_URL+`/admin/register`, user)
       .then((response) => {
         console.log('zzzzzzzzzzzzzzz',response);
 

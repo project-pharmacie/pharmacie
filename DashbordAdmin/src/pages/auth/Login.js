@@ -20,7 +20,7 @@ export default class Login extends React.Component {
     });
   }
   handleSubmit(event) {
-    const MON_URL = "http://192.168.1.41:4000";
+    const Mon_URL = "http://192.168.1.249:4000";
 
     event.preventDefault();
 
@@ -33,7 +33,7 @@ export default class Login extends React.Component {
 
     if (this.state.username && this.state.password) {
       axios
-        .post(MON_URL+`/admin/authenticate`, user)
+        .post(Mon_URL+`/admin/authenticate`, user)
         .then((response) => {
           let userresponse = response;
           console.log(userresponse.data);

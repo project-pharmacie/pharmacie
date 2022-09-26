@@ -3,7 +3,7 @@ import Loading from "../../../components/Loading";
 import swal from "sweetalert";
 import axios from "axios";
 
-const Mon_URL = "http://192.168.1.177:4000";
+const Mon_URL = "http://192.168.1.221:4000";
 
 const UserTable = () => {
   const [users, setusers] = useState([]);
