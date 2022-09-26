@@ -4,6 +4,7 @@ const db = require('../helpers/db');
 module.exports = {
     getAll,
     getById,
+    getByNom,
     create,
     update,
     delete: _delete
@@ -17,13 +18,15 @@ async function getAll() {
 async function getById(id) {
     return await getpharmacie(id);
 }
+async function getByNom(username) {
+    return await getpharmacieNom([username]);
+}
 
 async function create(params) {
     // validate
     if (await db.pharmacie.findOne({ where: { username: params.username } })) {
         throw 'Username "' + params.username + '" is already taken';
     }
-
     // hash password
     if (params.password) {
         params.hash = await bcrypt.hash(params.password, 10);
@@ -42,16 +45,9 @@ async function update(id, params) {
         throw 'Username "' + params.username + '" is already taken';
     }
 
-    // hash password if it was entered
-    if (params.password) {
-        params.hash = await bcrypt.hash(params.password, 10);
-    }
-
     // copy params to pharamcie and save
     Object.assign(pharmacie, params);
     await pharmacie.save();
-
-    return omitHash(pharmacie.get());
 }
 
 async function _delete(id) {
@@ -67,7 +63,8 @@ async function getpharmacie(id) {
     return pharmacie;
 }
 
- function omitHash(pharamcie) {
-     const { hash, ...pharamcieWithoutHash } = pharamcie;
-     return pharmacieWithoutHash;
- }
+async function getpharmacieNom(username) {
+    const pharmacie = await db.pharmacie.findOne({ where: { username: username }} );
+    if (!pharmacie) throw 'pharmacie not found';
+    return pharmacie;
+}

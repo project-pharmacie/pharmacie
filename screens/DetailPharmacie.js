@@ -140,6 +140,7 @@ const DetailPharmacie = ({ navigation, route }) => {
         />
 
         <Image
+          alt="img04"
           source={require("../assets/img/direction.png")}
           style={{ width: 20.0, height: 20.0 }}
         />
@@ -193,6 +194,7 @@ const DetailPharmacie = ({ navigation, route }) => {
                   }}
                 >
                   <Image
+                    alt="im04"
                     source={item.image}
                     style={{ width: 40.0, height: 40.0, borderRadius: 20.0 }}
                   />
@@ -246,6 +248,7 @@ const DetailPharmacie = ({ navigation, route }) => {
           >
             <Marker coordinate={PharmacieDabebi}>
               <Image
+                alt="img06"
                 source={require("../assets/img/custom_marker.png")}
                 style={{ width: 30.0, height: 30.0 }}
               />

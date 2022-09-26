@@ -6,7 +6,7 @@ import List from "../Shared/List";
 import SearchBar from "../Shared/SearchBar";
 import { NativeBaseProvider, Image } from "native-base";
 
-const Mon_URL = "http://192.168.1.177:4000";
+const Mon_URL = "http://192.168.1.41:4000";
 
 function Produit({ navigation }) {
   const [value, setValue] = useState(null);
