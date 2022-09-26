@@ -24,7 +24,7 @@ import "localstorage-polyfill";
 
 const Login = ({ navigation }) => {
   console.log(navigation, "login");
-  const Mon_URL = "http://192.168.1.41:4000";
+  const Mon_URL = "http://192.168.1.249:4000";
 
   const [items, setItems] = useState([]);
   const [error, setError] = useState("");

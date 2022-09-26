@@ -6,7 +6,7 @@ import ListPharmacie from "../Shared/ListPharmacie";
 import SearchBar from "../Shared/SearchBar";
 import { NativeBaseProvider, Image } from "native-base";
 
-const Mon_URL = "http://192.168.1.41:4000";
+const Mon_URL = "http://192.168.1.249:4000";
 
 function Pharmacie({ navigation }) {
   const [data, setdata] = useState([]);

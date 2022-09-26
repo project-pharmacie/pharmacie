@@ -12,17 +12,17 @@ import {
 import "localstorage-polyfill";
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ nom, navigation, etat, photo }) => {
+const Item = ({ nom, navigation, etat, photo, id }) => {
   return (
     <View style={styles.item}>
-      <Image   alt="im3" source={{ uri: photo }} style={styles.photo} />
+      <Image source={{ uri: photo }} alt="test" style={styles.photo} />
 
       <Text
         style={styles.title}
         onPress={() => {
           // using navigation to get some data to desplay in DetailProduit
           navigation.navigate("DetailProduit", {
-            data: { nom: nom, etat: etat, photo: photo },
+            data: { nom: nom, etat: etat, photo: photo, id: id },
           });
         }}
       >
@@ -40,6 +40,7 @@ const List = ({ searchPhrase, setClicked, data, navigation }) => {
       console.log("renderItemPHoto", item);
       return (
         <Item
+          id={item.id}
           photo={item.photo}
           etat={item.etat}
           nom={item.nom}
@@ -55,6 +56,7 @@ const List = ({ searchPhrase, setClicked, data, navigation }) => {
     ) {
       return (
         <Item
+           id={item.id}
           photo={item.photo}
           etat={item.etat}
           nom={item.nom}
@@ -70,6 +72,7 @@ const List = ({ searchPhrase, setClicked, data, navigation }) => {
     ) {
       return (
         <Item
+           id={item.id}
           photo={item.photo}
           etat={item.etat}
           nom={item.nom}

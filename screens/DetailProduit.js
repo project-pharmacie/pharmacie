@@ -12,33 +12,45 @@ import axios from "axios";
 import "localstorage-polyfill";
 
 function DetailProduit({ navigation, route }) {
-  const [isEnabled, setIsEnabled] = useState(true);
-  // console.log("route", route.params.data);
-  const Detail = route.params.data;
+  const Mon_URL = "http://192.168.1.249:4000";
+
+  var Detail = route.params.data;
+  const [data, setdata] = useState(Detail);
   const [Role, setRole] = useState(true);
-  //geting the Role of user and get the seleckted element Detail
-  const [detail, setDetail] = useState([]);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const DisponiblitéDarticle = () => {
-    Detail.etat === "Disponible" ? setIsEnabled(true) : setIsEnabled(false);
-  };
-  const UpdateDisponiblité = (id) => {
-    toggleSwitch();
+  // setDetail(Detail);
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = (id) => {
+    console.log("id=>", id);
+
+    setIsEnabled((previousState) => !previousState);
     isEnabled
-      ? setDetail()
-      : axios.put(Mon_URL + `/user/${id}`).then((response) => {
-          console.log("response===========>", response);
+      ? setdata({
+          id: Detail.id,
+          nom: Detail.nom,
+          etat: "Disponible",
+          photo: Detail.photo,
+        })
+      : setdata({
+          id: Detail.id,
+          nom: Detail.nom,
+          etat: "Indisponible",
+          photo: Detail.photo,
         });
+    console.log("p=>", data);
+    axios.put(Mon_URL + `/produit/${id}`, data).then((response) => {
+      console.log("response ===========>", response.config.data);
+      axios.get(Mon_URL + "/produit/" + data.nom).then((res) => {
+        setdata(res.data[0]);
+        console.log(res.data[0],"i'm trying");
+      });
+    });
   };
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("etat"));
-    console.log(detail, "detail");
-    setDetail(detail);
-    data === "Pharmacien" ? setRole(false) : setRole(!false);
-    console.log(Detail.id);
-    DisponiblitéDarticle();
-  }, [UpdateDisponiblité]);
+    const Role = JSON.parse(localStorage.getItem("etat"));
+    Role === "Pharmacien" ? setRole(false) : setRole(!false);
+    console.log(data, "data.id");
+  }, [isEnabled]);
   return (
     <NativeBaseProvider>
       <ImageBackground
@@ -51,7 +63,7 @@ function DetailProduit({ navigation, route }) {
               <View style={styles.ImageX}>
                 <Image
                   alt="im01"
-                  source={{ uri: Detail.photo }}
+                  source={{ uri: data.photo }}
                   style={{
                     height: 300,
                     width: 300,
@@ -65,7 +77,7 @@ function DetailProduit({ navigation, route }) {
                 <Text style={styles.title}>
                   Nom du produit:
                   <Text style={{ fontSize: 15, color: "black" }}>
-                    {" " + Detail.nom}
+                    {" " + data.nom}
                   </Text>
                 </Text>
               </View>
@@ -73,7 +85,7 @@ function DetailProduit({ navigation, route }) {
                 <Text style={styles.title}>
                   Disponibilité:
                   <Text style={{ fontSize: 15, color: "black" }}>
-                    {" " + Detail.etat}
+                    {" " + data.etat}
                   </Text>
                 </Text>
                 <View></View>
@@ -104,7 +116,7 @@ function DetailProduit({ navigation, route }) {
             <View style={styles.ImageX}>
               <Image
                 alt="im01"
-                source={{ uri: Detail.photo }}
+                source={{ uri: data.photo }}
                 style={{
                   height: 300,
                   width: 300,
@@ -113,7 +125,7 @@ function DetailProduit({ navigation, route }) {
                   backgroundColor: "white",
                 }}
               />
-              <Text style={styles.title1}>Nom du produit:{Detail.nom}</Text>
+              <Text style={styles.title1}>Nom du produit:{data.nom}</Text>
               <View
                 style={{
                   display: "flex",
@@ -123,27 +135,30 @@ function DetailProduit({ navigation, route }) {
                 }}
               >
                 <View>
-                  {isEnabled && Detail.etat === "Disponible" ? (
+                  {isEnabled && data.etat === "Disponible" ? (
                     <Text style={styles.title}>
                       Disponibilité:
                       <Text style={{ fontSize: 15, color: "#2DA539" }}>
-                        Disponible
+                        {data.etat}
                       </Text>
                     </Text>
                   ) : (
                     <Text style={{ color: "red", fontSize: 15 }}>
                       <Text style={styles.title}> Disponibilité: </Text>
-                      Indisponible
+                      {data.etat}
                     </Text>
                   )}
                 </View>
                 <View>
-                  <Switch
-                    rackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-                    onValueChange={() => UpdateDisponiblité(Detail.id)}
-                    value={isEnabled}
-                  />
+                  <View>
+                    <Switch
+                      trackColor={{ false: "#767577", true: "#81b0ff" }}
+                      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={() => toggleSwitch(data.id)}
+                      value={isEnabled}
+                    />
+                  </View>
                 </View>
               </View>
             </View>

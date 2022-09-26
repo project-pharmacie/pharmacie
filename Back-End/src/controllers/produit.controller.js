@@ -2,15 +2,11 @@ const Joi = require("joi");
 const produitService = require("../services/produit.service");
 const validateRequest = require("../middleware/validate-request");
 
-
-
-
 function registerSchema(req, res, next) {
   const schema = Joi.object({
-      nom: Joi.string().required(),
-      etat: Joi.string().required(),
-      photo: Joi.string().required(),
-
+    nom: Joi.string().required(),
+    etat: Joi.string().required(),
+    photo: Joi.string().required(),
   });
   validateRequest(req, next, schema);
 }
@@ -22,24 +18,26 @@ function register(req, res, next) {
     .catch(next);
 }
 
-
 function getAll(req, res, next) {
-  produitService.getAll()
+  produitService
+    .getAll()
     .then((produit) => res.json(produit))
     .catch(next);
 }
 
 function getById(req, res, next) {
-  produitService.getById(req.params.id)
-      .then(produit => res.json(produit))
-      .catch(next);
+  produitService
+    .getById(req.params.id)
+    .then((produit) => res.json(produit))
+    .catch(next);
 }
 
 function getByNom(req, res, next) {
-  console.log(req.params.name ,"=>>>>>>>")
-  produitService.getByNom(req.params.nom)
-      .then(produit => res.json([produit]))
-      .catch(next);
+  console.log(req.params.name, "=>>>>>>>");
+  produitService
+    .getByNom(req.params.nom)
+    .then((produit) => res.json([produit]))
+    .catch(next);
 }
 
 function updateSchema(req, res, next) {
@@ -65,4 +63,13 @@ function _delete(req, res, next) {
     .catch(next);
 }
 
-module.exports = { getAll,getByNom,register,registerSchema,getById,update,updateSchema,_delete };
+module.exports = {
+  getAll,
+  getByNom,
+  register,
+  registerSchema,
+  getById,
+  update,
+  updateSchema,
+  _delete,
+};
